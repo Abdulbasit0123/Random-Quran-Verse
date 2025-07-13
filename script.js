@@ -24,7 +24,7 @@ async function loadRandomQuranVerse() {
             document.getElementById("tafseer").textContent = tafseerText || '—';
             const sourceEl = document.getElementById("source");
             sourceEl.textContent = `${ayahNumber} - ${surahName}`;
-            sourceEl.onclick = () => window.open(tarteelUrl, "_blank");
+            sourceEl.onclick = () => window.open(tarteelUrl);
         } else {
             document.getElementById("tafseer").textContent = "Error fetching verse";
         }
