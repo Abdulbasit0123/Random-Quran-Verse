@@ -20,6 +20,8 @@ body {
 
 /* Content Wrapper */
 .content-wrapper {
+    background-color: #0D1117;
+    color: #D2E1E6;
     display: flex;
     flex-direction: column; 
     align-items: center;
