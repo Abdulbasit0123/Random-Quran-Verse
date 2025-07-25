@@ -445,7 +445,4 @@ async function init() {
     }
 }
 
-// Optional: Add a function to manually clear cache (useful for development)
-window.clearQuranCache = clearCache;
-
 init();
