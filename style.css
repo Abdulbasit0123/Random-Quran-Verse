@@ -1,63 +1,100 @@
 @font-face {
-    font-family: 'UthmanicHafs';
-    src: url('font/Uthmanic-Hafs-Font.otf') format('opentype');
-    font-weight: normal;
-    font-style: normal;
+	font-family: "UthmanicHafs";
+	src: url("font/Uthmanic-Hafs-Font.otf") format("opentype");
+	font-weight: normal;
+	font-style: normal;
 }
 
+html,
 body {
-    background-color: #0D1117;
-    color: #D2E1E6;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    min-height: 80vh;
-    margin: 0;
-    padding: 2rem; 
+	background-color: #0d1117;
+	color: #d2e1e6;
+	margin: 0;
+	padding: 0;
+	height: 100%;
+	overflow: hidden;
+	font-family: sans-serif;
+}
+.viewport {
+	width: 100vw;
+	height: 100vh;
+	overflow: hidden;
+	position: relative;
+}
+.canvas {
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: flex;
+	flex-wrap: nowrap;
+	transition: transform 0.5s ease;
+}
+img {
+	width: 100%;
+	height: auto;
+	justify-content: center;
+}
+.panel {
+	position: absolute;
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 3rem;
+	/* overflow: auto; */
+	/* border: 1px solid #ccc; */
 }
 
 .content-wrapper {
-    display: flex;
-    flex-direction: column; 
-    align-items: center;
-    justify-content: center;
-    flex-grow: 1; 
+	/* background-color: tomato; */
+	padding: 15px;
+	max-height: 85vh;
+	overflow: auto;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	/* justify-content: center; */
+	flex-grow: 1;
+
+	padding: 2rem 4rem;
 }
 
-p.tafseer {
-    text-align: center;
-    margin-bottom: 1.5rem; 
-    font-family: 'Calibri', Arial, sans-serif;
-    font-size: 25px;
-    direction: rtl;
-    font-weight: 400;
-    text-decoration: none;
-    font-style: normal;
-    font-variant: normal;
-    text-transform: none;
-    margin-top: 0;
-    text-align: center;
-    flex-shrink: 0; 
+.quran {
+	text-align: center;
+	margin-bottom: 2rem;
+	font-family: "UthmanicHafs";
+	font-size: 33px;
+	font-weight: normal;
+	text-transform: none;
+	margin-top: 0;
+	flex-shrink: 0;
+	direction: rtl;
 }
 
-p.quran {
-    text-align: center;
-    margin-bottom: 2rem;
-    font-family: 'UthmanicHafs';
-    font-size: 33px;
-    font-weight: normal;
-    text-transform: none;
-    margin-top: 0;
-    flex-shrink: 0;
-    direction: rtl;
+.tafseer {
+	text-align: center;
+	margin-bottom: 1.5rem;
+	font-family: "Calibri", Arial, sans-serif;
+	font-size: 25px;
+	direction: rtl;
+	font-weight: 400;
+	text-decoration: none;
+	font-style: normal;
+	font-variant: normal;
+	text-transform: none;
+	margin-top: 0;
+	text-align: center;
+	flex-shrink: 0;
 }
 
-p.source {
-    font-family: 'UthmanicHafs';
-    font-size: 23px;
-    text-transform: none;
-    margin-top: 0;
-    text-align: center;
-    flex-shrink: 0; 
+.source {
+	all: unset;
+	font-family: "UthmanicHafs";
+	font-size: 23px;
+	text-transform: none;
+	margin-top: 0;
+	text-align: center;
+	flex-shrink: 0;
+	cursor: pointer;
 }
