@@ -49,7 +49,7 @@ img {
 .content-wrapper {
 	/* background-color: tomato; */
 	padding: 15px;
-	max-height: 85vh;
+	max-height: 60vh;
 	overflow: auto;
 	display: flex;
 	flex-direction: column;
