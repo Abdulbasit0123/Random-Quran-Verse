@@ -11,9 +11,6 @@ body {
 	color: #d2e1e6;
 	margin: 0;
 	padding: 0;
-	height: 100%;
-	overflow: hidden;
-	font-family: sans-serif;
 }
 .viewport {
 	width: 100vw;
@@ -26,13 +23,8 @@ body {
 	top: 0;
 	left: 0;
 	display: flex;
-	flex-wrap: nowrap;
 	transition: transform 0.5s ease;
-}
-img {
-	width: 100%;
-	height: auto;
-	justify-content: center;
+	/* flex-wrap: nowrap; */
 }
 .panel {
 	position: absolute;
@@ -42,57 +34,38 @@ img {
 	align-items: center;
 	justify-content: center;
 	font-size: 3rem;
-	/* overflow: auto; */
-	/* border: 1px solid #ccc; */
 }
 
 .content-wrapper {
-	/* background-color: tomato; */
-	padding: 15px;
-	max-height: 60vh;
+	padding: 2rem 4rem;
+	width: 70%;
+	max-height: 70dvh;
 	overflow: auto;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	/* justify-content: center; */
-	flex-grow: 1;
+	justify-content: center;
+	text-align: center;
+	direction: rtl;
+}
+
+.content-wrapper > * {
+	margin-bottom: 0.3rem;
 }
 
 .quran {
-	text-align: center;
-	margin-bottom: 2rem;
 	font-family: "UthmanicHafs";
-	font-size: 33px;
-	font-weight: normal;
-	text-transform: none;
-	margin-top: 0;
-	flex-shrink: 0;
-	direction: rtl;
+	font-size: 2rem;
 }
 
 .tafseer {
-	text-align: center;
-	margin-bottom: 1.5rem;
 	font-family: "Calibri", Arial, sans-serif;
-	font-size: 25px;
-	direction: rtl;
-	font-weight: 400;
-	text-decoration: none;
-	font-style: normal;
-	font-variant: normal;
-	text-transform: none;
-	margin-top: 0;
-	text-align: center;
-	flex-shrink: 0;
+	font-size: 1.5rem;
 }
 
 .source {
 	all: unset;
 	font-family: "UthmanicHafs";
-	font-size: 23px;
-	text-transform: none;
-	margin-top: 0;
-	text-align: center;
-	flex-shrink: 0;
+	font-size: 1.4rem;
 	cursor: pointer;
 }
