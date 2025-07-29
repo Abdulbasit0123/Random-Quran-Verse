@@ -37,9 +37,9 @@ body {
 }
 
 .content-wrapper {
-	padding: 2rem 4rem;
-	width: 70%;
-	max-height: 70dvh;
+	padding: 1rem 1rem;
+	width: 85%;
+	max-height: 85dvh;
 	overflow: auto;
 	display: flex;
 	flex-direction: column;
