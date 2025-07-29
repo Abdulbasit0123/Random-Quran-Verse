@@ -158,7 +158,7 @@ function createPanel(v, h, surah, tafseer, surahIndex, ayahIndex) {
     // Strip Basmala from ayah text unless Surah Fatiha
     let ayahText = ayahData.text;
     if (ayahIndex === 0 && surahIndex > 0) {
-        ayahText = ayahText.replace('بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ', '');
+        ayahText = ayahText.replace('بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ', '');
     }
 
     const ayahNumber = ayahData.numberInSurah;
