@@ -33,7 +33,6 @@ body {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	font-size: 3rem;
 }
 
 .content-wrapper {
@@ -44,7 +43,7 @@ body {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	justify-content: center;
+	justify-content: flex-start;
 	text-align: center;
 	direction: rtl;
 }
