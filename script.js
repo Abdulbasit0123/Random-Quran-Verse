@@ -9,7 +9,7 @@ let currentSurah = null;
 let currentSurahIndex = null;
 let currentAyahIndex = null;
 
-// Stores panels by 'v,h'
+// Stores panels by 'v,h' with their verse information
 const panelMap = {};
 
 // Cache for Quran and Tafseer data
@@ -107,8 +107,8 @@ async function fetchQuranAndTafseer() {
     console.log('Fetching data from API...');
     try {
         const [quranRes, tafseerRes] = await Promise.all([
-            fetch('https://api.alquran.cloud/v1/quran/ar.sahih'),
-            fetch('https://api.alquran.cloud/v1/quran/ku.asan')
+            fetch('http://api.alquran.cloud/v1/quran/ar.sahih'),
+            fetch('http://api.alquran.cloud/v1/quran/ku.asan')
         ]);
 
         if (!quranRes.ok || !tafseerRes.ok) {
@@ -158,7 +158,7 @@ function createPanel(v, h, surah, tafseer, surahIndex, ayahIndex) {
     // Strip Basmala from ayah text unless Surah Fatiha
     let ayahText = ayahData.text;
     if (ayahIndex === 0 && surahIndex > 0) {
-        ayahText = ayahText.replace('بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ', '');
+        ayahText = ayahText.replace('بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ', '');
     }
 
     const ayahNumber = ayahData.numberInSurah;
@@ -190,7 +190,27 @@ function createPanel(v, h, surah, tafseer, surahIndex, ayahIndex) {
     panel.appendChild(wrapper);
     canvas.appendChild(panel);
 
-    panelMap[panelKey(v, h)] = panel;
+    // Store panel with verse information
+    const key = panelKey(v, h);
+    panelMap[key] = {
+        element: panel,
+        surahIndex: surahIndex,
+        ayahIndex: ayahIndex,
+        surah: surah
+    };
+}
+
+// Update current state based on visible panel
+function updateCurrentState() {
+    const key = panelKey(currentV, currentH);
+    const panelData = panelMap[key];
+    
+    if (panelData) {
+        currentSurah = panelData.surah;
+        currentSurahIndex = panelData.surahIndex;
+        currentAyahIndex = panelData.ayahIndex;
+        console.log(`Updated state to: Surah ${currentSurahIndex + 1}, Ayah ${currentAyahIndex + 1}`);
+    }
 }
 
 // Create a random surah + ayah panel
@@ -203,11 +223,10 @@ async function createRandomPanel(v, h) {
         const ayahs = surahs[surahIndex].ayahs;
         const ayahIndex = Math.floor(Math.random() * ayahs.length);
 
-        currentSurah = surahs[surahIndex];
-        currentSurahIndex = surahIndex;
-        currentAyahIndex = ayahIndex;
-
-        createPanel(v, h, currentSurah, tafseer, surahIndex, ayahIndex);
+        createPanel(v, h, surahs[surahIndex], tafseer, surahIndex, ayahIndex);
+        
+        // Update current state after creating the panel
+        updateCurrentState();
     } catch (error) {
         console.error('Error creating random panel:', error);
         // You might want to show an error message to the user here
@@ -226,9 +245,7 @@ async function createAdjacentAyahPanel(v, h, direction) {
     try {
         const { quran, tafseer } = await fetchQuranAndTafseer();
 
-        currentAyahIndex = newAyahIndex;
-
-        createPanel(v, h, currentSurah, tafseer, currentSurahIndex, currentAyahIndex);
+        createPanel(v, h, currentSurah, tafseer, currentSurahIndex, newAyahIndex);
     } catch (error) {
         console.error('Error creating adjacent ayah panel:', error);
     }
@@ -239,6 +256,9 @@ function updateCanvasPosition() {
     const x = -currentH * 100;
     const y = -currentV * 100;
     canvas.style.transform = `translate(${x}vw, ${y}vh)`;
+    
+    // Update current state whenever we move to a different position
+    updateCurrentState();
 }
 
 function ensurePanel(v, h) {
@@ -258,6 +278,9 @@ function moveVertical(dir) {
 
 // Move horizontally (left/right) within the same surah
 function moveHorizontal(dir) {
+    // Make sure we have the current state updated
+    updateCurrentState();
+    
     if (!currentSurah) {
         console.warn('Please move vertically first to load a surah.');
         return;
@@ -276,9 +299,6 @@ function moveHorizontal(dir) {
     if (!panelMap[targetKey]) {
         createAdjacentAyahPanel(currentV, currentH, dir > 0 ? -1 : 1);
     }
-    
-    // Always update currentAyahIndex to match the target position
-    currentAyahIndex = nextAyahIndex;
     
     updateCanvasPosition();
 }
@@ -444,5 +464,8 @@ async function init() {
         // You might want to show an error message to the user here
     }
 }
+
+// Optional: Add a function to manually clear cache (useful for development)
+// window.clearQuranCache = clearCache;
 
 init();
