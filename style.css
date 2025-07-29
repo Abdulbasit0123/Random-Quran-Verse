@@ -36,7 +36,7 @@ body {
 }
 
 .content-wrapper {
-	padding: 1rem 1rem;
+	padding: 0.5rem 1rem;
 	width: 85%;
 	max-height: 85dvh;
 	overflow: auto;
