@@ -14,7 +14,7 @@ body {
 }
 .viewport {
 	width: 100vw;
-	height: 100vh;
+	height: 100dvh;
 	overflow: hidden;
 	position: relative;
 }
@@ -29,7 +29,7 @@ body {
 .panel {
 	position: absolute;
 	width: 100vw;
-	height: 100vh;
+	height: 100dvh;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -54,17 +54,17 @@ body {
 
 .quran {
 	font-family: "UthmanicHafs";
-	font-size: 2rem;
+	font-size: 1.8rem;
 }
 
 .tafseer {
 	font-family: "Calibri", Arial, sans-serif;
-	font-size: 1.5rem;
+	font-size: 1.4rem;
 }
 
 .source {
 	all: unset;
 	font-family: "UthmanicHafs";
-	font-size: 1.4rem;
+	font-size: 1.3rem;
 	cursor: pointer;
 }
