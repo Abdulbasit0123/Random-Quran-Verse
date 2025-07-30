@@ -308,7 +308,7 @@ function setupKeyboardControls() {
     window.addEventListener('keydown', (e) => {
         if (e.key === 'ArrowRight') moveHorizontal(1);
         else if (e.key === 'ArrowLeft') moveHorizontal(-1);
-        else if (e.key === 'ArrowDown' || e.key === 'Space') moveVertical(1);
+        else if (e.key === 'ArrowDown' || e.key === ' ') moveVertical(1);
         else if (e.key === 'ArrowUp') moveVertical(-1);
     });
 }
