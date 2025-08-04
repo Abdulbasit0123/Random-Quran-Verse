@@ -1,4 +1,5 @@
 const canvas = document.getElementById('canvas');
+const landing = document.querySelector('.landing');
 
 // Tracks position
 let currentV = 0;
@@ -106,9 +107,10 @@ async function fetchQuranAndTafseer() {
     // Fetch from API if not in cache
     console.log('Fetching data from API...');
     try {
+        landing.style.display = 'flex';
         const [quranRes, tafseerRes] = await Promise.all([
-            fetch('https://api.alquran.cloud/v1/quran/ar.sahih'),
-            fetch('https://api.alquran.cloud/v1/quran/ku.asan')
+            fetch('http://api.alquran.cloud/v1/quran/ar.sahih'),
+            fetch('http://api.alquran.cloud/v1/quran/ku.asan')
         ]);
 
         if (!quranRes.ok || !tafseerRes.ok) {
@@ -123,6 +125,7 @@ async function fetchQuranAndTafseer() {
         cachedTafseerData = tafseer;
         saveToCache(quran, tafseer);
 
+        landing.style.display = "none";
         return { quran, tafseer };
     } catch (error) {
         console.error('Error fetching data:', error);
@@ -308,7 +311,7 @@ function setupKeyboardControls() {
     window.addEventListener('keydown', (e) => {
         if (e.key === 'ArrowRight') moveHorizontal(1);
         else if (e.key === 'ArrowLeft') moveHorizontal(-1);
-        else if (e.key === 'ArrowDown' || e.key === ' ') moveVertical(1);
+        else if (e.key === 'ArrowDown') moveVertical(1);
         else if (e.key === 'ArrowUp') moveVertical(-1);
     });
 }
@@ -452,20 +455,14 @@ function setupScrollControls() {
 async function init() {
     try {
         // Pre-load data to show loading state if needed
-        console.log('Initializing app...');
         await createRandomPanel(0, 0);
         updateCanvasPosition();
         setupKeyboardControls();
         setupTouchControls();
         setupScrollControls();
-        console.log('App initialized successfully');
     } catch (error) {
         console.error('Error initializing app:', error);
-        // You might want to show an error message to the user here
     }
 }
-
-// Optional: Add a function to manually clear cache (useful for development)
-// window.clearQuranCache = clearCache;
 
 init();
