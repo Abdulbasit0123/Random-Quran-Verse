@@ -109,8 +109,8 @@ async function fetchQuranAndTafseer() {
     try {
         landing.style.display = 'flex';
         const [quranRes, tafseerRes] = await Promise.all([
-            fetch('http://api.alquran.cloud/v1/quran/ar.sahih'),
-            fetch('http://api.alquran.cloud/v1/quran/ku.asan')
+            fetch('https://api.alquran.cloud/v1/quran/ar.sahih'),
+            fetch('https://api.alquran.cloud/v1/quran/ku.asan')
         ]);
 
         if (!quranRes.ok || !tafseerRes.ok) {
@@ -466,3 +466,4 @@ async function init() {
 }
 
 init();
+
