@@ -46,6 +46,21 @@ body {
 	justify-content: flex-start;
 	text-align: center;
 	direction: rtl;
+
+	-webkit-mask-image: linear-gradient(
+		to bottom,
+		transparent,
+		black 20px,
+		black calc(100% - 20px),
+		transparent
+	);
+	mask-image: linear-gradient(
+		to bottom,
+		transparent,
+		black 20px,
+		black calc(100% - 20px),
+		transparent
+	);
 }
 
 .content-wrapper > * {
@@ -77,7 +92,7 @@ body {
 	display: none;
 }
 
-#landing{
+#landing {
 	max-width: 100%;
 	max-height: 100%;
 	display: block;
@@ -86,9 +101,15 @@ body {
 }
 
 @keyframes landing-fade {
-	0% { opacity: 0; }
-	50% { opacity: 1; }
-	100% { opacity: 0; }
+	0% {
+		opacity: 0;
+	}
+	50% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+	}
 }
 
 #spinner {

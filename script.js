@@ -187,7 +187,7 @@ function createPanel(v, h, surah, tafseer, surahIndex, ayahIndex) {
     const sourceEl = document.createElement('a');
     sourceEl.className = 'source';
     sourceEl.href = `https://tarteel.ai/ayah/${surahIndex + 1}/${ayahNumber}`;
-    sourceEl.textContent = `${surahName} - ${ayahNumber}`;
+    sourceEl.innerHTML = `${surahName} - ${ayahNumber}<br><br>`;
 
     wrapper.append(quranEl, tafseerEl, sourceEl);
     panel.appendChild(wrapper);
