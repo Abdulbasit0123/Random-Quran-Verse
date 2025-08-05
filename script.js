@@ -129,13 +129,13 @@ async function fetchQuranAndTafseer() {
         return { quran, tafseer };
     } catch (error) {
         console.error('Error fetching data:', error);
-        
+
         // Try to use cached data as fallback even if version mismatch
         const fallbackData = {
             quran: localStorage.getItem(QURAN_CACHE_KEY),
             tafseer: localStorage.getItem(TAFSEER_CACHE_KEY)
         };
-        
+
         if (fallbackData.quran && fallbackData.tafseer) {
             console.log('Using cached data as fallback');
             try {
@@ -148,7 +148,7 @@ async function fetchQuranAndTafseer() {
                 console.error('Error parsing fallback data:', parseError);
             }
         }
-        
+
         throw error; // Re-throw if no fallback available
     }
 }
@@ -187,9 +187,11 @@ function createPanel(v, h, surah, tafseer, surahIndex, ayahIndex) {
     const sourceEl = document.createElement('a');
     sourceEl.className = 'source';
     sourceEl.href = `https://tarteel.ai/ayah/${surahIndex + 1}/${ayahNumber}`;
-    sourceEl.innerHTML = `${surahName} - ${ayahNumber}<br><br>`;
+    sourceEl.innerHTML = `${surahName} - ${ayahNumber}`;
 
-    wrapper.append(quranEl, tafseerEl, sourceEl);
+    const breakEl = document.createElement('br');
+
+    wrapper.append(quranEl, tafseerEl, sourceEl, breakEl);
     panel.appendChild(wrapper);
     canvas.appendChild(panel);
 
@@ -207,7 +209,7 @@ function createPanel(v, h, surah, tafseer, surahIndex, ayahIndex) {
 function updateCurrentState() {
     const key = panelKey(currentV, currentH);
     const panelData = panelMap[key];
-    
+
     if (panelData) {
         currentSurah = panelData.surah;
         currentSurahIndex = panelData.surahIndex;
@@ -227,7 +229,7 @@ async function createRandomPanel(v, h) {
         const ayahIndex = Math.floor(Math.random() * ayahs.length);
 
         createPanel(v, h, surahs[surahIndex], tafseer, surahIndex, ayahIndex);
-        
+
         // Update current state after creating the panel
         updateCurrentState();
     } catch (error) {
@@ -259,7 +261,7 @@ function updateCanvasPosition() {
     const x = -currentH * 100;
     const y = -currentV * 100;
     canvas.style.transform = `translate(${x}vw, ${y}vh)`;
-    
+
     // Update current state whenever we move to a different position
     updateCurrentState();
 }
@@ -283,7 +285,7 @@ function moveVertical(dir) {
 function moveHorizontal(dir) {
     // Make sure we have the current state updated
     updateCurrentState();
-    
+
     if (!currentSurah) {
         console.warn('Please move vertically first to load a surah.');
         return;
@@ -296,13 +298,13 @@ function moveHorizontal(dir) {
     }
 
     currentH += dir;
-    
+
     // Check if panel already exists before creating a new one
     const targetKey = panelKey(currentV, currentH);
     if (!panelMap[targetKey]) {
         createAdjacentAyahPanel(currentV, currentH, dir > 0 ? -1 : 1);
     }
-    
+
     updateCanvasPosition();
 }
 
