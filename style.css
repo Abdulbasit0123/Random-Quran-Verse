@@ -132,3 +132,18 @@ body {
 		transform: translate(-50%, -50%) rotate(-360deg);
 	}
 }
+
+.warning-edge {
+	position: fixed;
+	top: 0;
+	width: 0px; /* Start at 0px */
+	height: 100vh;
+	background-color: rgb(255, 100, 100);
+	z-index: 9999;
+}
+.start {
+	right: 0;
+}
+.end {
+	left: 0;
+}

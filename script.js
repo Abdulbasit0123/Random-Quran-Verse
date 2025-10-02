@@ -281,6 +281,37 @@ function moveVertical(dir) {
     updateCanvasPosition();
 }
 
+function showWarningEdge(id) {
+    const element = document.getElementById(id);
+    const maxWidth = 10; // in pixels
+    const duration = 250; // total time for full animation (expand + contract) in ms
+
+    let startTime = null;
+
+    function animate(timestamp) {
+        if (!startTime) startTime = timestamp;
+        const elapsed = timestamp - startTime;
+        const halfDuration = duration / 2;
+
+        let progress;
+        if (elapsed <= halfDuration) {
+            // Expanding phase
+            progress = elapsed / halfDuration;
+            element.style.width = (progress * maxWidth) + 'px';
+        } else if (elapsed <= duration) {
+            // Contracting phase
+            progress = (elapsed - halfDuration) / halfDuration;
+            element.style.width = ((1 - progress) * maxWidth) + 'px';
+        } else {
+            // Done
+            element.style.width = '0px';
+            return;
+        }
+        requestAnimationFrame(animate);
+    }
+    requestAnimationFrame(animate);
+}
+
 // Move horizontally (left/right) within the same surah
 function moveHorizontal(dir) {
     // Make sure we have the current state updated
@@ -290,13 +321,13 @@ function moveHorizontal(dir) {
         console.warn('Please move vertically first to load a surah.');
         return;
     }
-
+    
     const nextAyahIndex = currentAyahIndex + (dir > 0 ? -1 : 1); // right = previous, left = next
     if (nextAyahIndex < 0) {
-        console.warn('Reached the start.');
+        showWarningEdge('startEdge');
         return;
     } else if (nextAyahIndex >= currentSurah.ayahs.length) {
-        console.warn('Reached the end.');
+        showWarningEdge('endEdge');
         return;
     }
 
