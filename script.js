@@ -321,7 +321,7 @@ function moveHorizontal(dir) {
         console.warn('Please move vertically first to load a surah.');
         return;
     }
-    
+
     const nextAyahIndex = currentAyahIndex + (dir > 0 ? -1 : 1); // right = previous, left = next
     if (nextAyahIndex < 0) {
         showWarningEdge('startEdge');
@@ -430,6 +430,102 @@ function setupTouchControls() {
     });
 }
 
+function setupMouseControls() {
+    let startX = 0;
+    let startY = 0;
+    let mouseStartTarget = null; // Stores the element where the mouse down began
+    let isMouseDown = false;
+    let isDraggingFromOutside = false; // Track if we're dragging from outside content
+
+    window.addEventListener('mousedown', e => {
+        // Check if mouse down started on or inside a content-wrapper
+        const contentWrapper = e.target.closest('.content-wrapper');
+        if (contentWrapper) {
+            return; // Don't handle mouse controls for content areas
+        }
+
+        isMouseDown = true;
+        isDraggingFromOutside = true;
+        // Record the starting coordinates and, most importantly, the target element.
+        startX = e.clientX;
+        startY = e.clientY;
+        mouseStartTarget = e.target;
+
+        // Prevent text selection on content-wrapper elements when dragging from outside
+        const contentWrappers = document.querySelectorAll('.content-wrapper');
+        contentWrappers.forEach(wrapper => {
+            wrapper.style.userSelect = 'none';
+            wrapper.style.webkitUserSelect = 'none';
+            wrapper.style.mozUserSelect = 'none';
+            wrapper.style.msUserSelect = 'none';
+        });
+    });
+
+    window.addEventListener('mouseup', e => {
+        if (!mouseStartTarget || !isMouseDown) {
+            return; // Exit if the mouse down didn't start properly.
+        }
+
+        const endX = e.clientX;
+        const endY = e.clientY;
+
+        const diffX = startX - endX;
+        const diffY = startY - endY;
+        const swipeThreshold = 50; // Minimum pixel distance to be considered a swipe.
+
+        // --- HORIZONTAL SWIPE ---
+        if (Math.abs(diffX) > Math.abs(diffY)) {
+            if (diffX > swipeThreshold) moveHorizontal(1);
+            else if (diffX < -swipeThreshold) moveHorizontal(-1);
+        }
+        // --- VERTICAL SWIPE ---
+        else {
+            const isSwipeUp = diffY > swipeThreshold; // Mouse moved up (scroll down).
+            const isSwipeDown = diffY < -swipeThreshold; // Mouse moved down (scroll up).
+
+            if (!isSwipeUp && !isSwipeDown) {
+                // Reset selection prevention and exit
+                resetContentSelection();
+                return; // Not a long enough swipe.
+            }
+
+            // Since we already checked that mouse down didn't start on content-wrapper,
+            // we can directly move the panel
+            if (isSwipeUp) moveVertical(1);
+            else if (isSwipeDown) moveVertical(-1);
+        }
+
+        // Reset selection prevention
+        resetContentSelection();
+
+        // Reset for the next mouse event.
+        mouseStartTarget = null;
+        isMouseDown = false;
+        isDraggingFromOutside = false;
+    });
+
+    window.addEventListener('mouseleave', () => {
+        // Reset selection prevention and cancel mouse interaction if mouse leaves the window
+        resetContentSelection();
+        mouseStartTarget = null;
+        isMouseDown = false;
+        isDraggingFromOutside = false;
+    });
+
+    function resetContentSelection() {
+        if (!isDraggingFromOutside) return;
+
+        // Re-enable text selection on content-wrapper elements
+        const contentWrappers = document.querySelectorAll('.content-wrapper');
+        contentWrappers.forEach(wrapper => {
+            wrapper.style.userSelect = '';
+            wrapper.style.webkitUserSelect = '';
+            wrapper.style.mozUserSelect = '';
+            wrapper.style.msUserSelect = '';
+        });
+    }
+}
+
 function setupScrollControls() {
     window.addEventListener('wheel', (e) => {
         // Handle horizontal scrolling first, as it's simpler.
@@ -487,6 +583,7 @@ function setupScrollControls() {
     }, { passive: false }); // `passive: false` is required to use preventDefault().
 }
 
+
 // Initialize the app
 async function init() {
     try {
@@ -495,6 +592,7 @@ async function init() {
         updateCanvasPosition();
         setupKeyboardControls();
         setupTouchControls();
+        setupMouseControls();
         setupScrollControls();
     } catch (error) {
         console.error('Error initializing app:', error);
