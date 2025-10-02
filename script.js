@@ -292,8 +292,11 @@ function moveHorizontal(dir) {
     }
 
     const nextAyahIndex = currentAyahIndex + (dir > 0 ? -1 : 1); // right = previous, left = next
-    if (nextAyahIndex < 0 || nextAyahIndex >= currentSurah.ayahs.length) {
-        console.warn('Reached start or end of surah.');
+    if (nextAyahIndex < 0) {
+        console.warn('Reached the start.');
+        return;
+    } else if (nextAyahIndex >= currentSurah.ayahs.length) {
+        console.warn('Reached the end.');
         return;
     }
 
@@ -468,4 +471,3 @@ async function init() {
 }
 
 init();
-
