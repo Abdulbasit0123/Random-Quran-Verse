@@ -5,9 +5,6 @@ const landing = document.querySelector('.landing');
 let currentV = 0;
 let currentH = 0;
 
-let currentVH = 0;
-let currentVW = 0;
-
 // Tracks the current surah and ayah
 let currentSurah = null;
 let currentSurahIndex = null;
@@ -262,7 +259,6 @@ async function createAdjacentAyahPanel(v, h, direction) {
 // Update the canvas position using transform
 function updateCanvasPosition() {
     const x = -currentH * 100;
-    currentVW = x;
     const y = -currentV * 100;
     currentVH = y;
     canvas.style.transform = `translate(${x}vw, ${y}vh)`;
@@ -304,9 +300,9 @@ function showWarningEdge(id) {
             progress = elapsed / halfDuration;
             element.style.width = (progress * maxWidth) + 'px';
             if (id === 'startEdge') {
-                canvas.style.transform = `translate(${currentVW - (progress * maxWidth)}vw, ${currentVH}vh`;
+                canvas.style.transform = `translate(${(-currentH * 100) - (progress * maxWidth)}vw, ${(-currentV * 100)}vh`;
             } else {
-                canvas.style.transform = `translate(${currentVW + (progress * maxWidth)}vw, ${currentVH}vh`;
+                canvas.style.transform = `translate(${(-currentH * 100) + (progress * maxWidth)}vw, ${(-currentV * 100)}vh`;
             }
 
         } else if (elapsed <= duration) {
@@ -314,14 +310,14 @@ function showWarningEdge(id) {
             progress = (elapsed - halfDuration) / halfDuration;
             element.style.width = ((1 - progress) * maxWidth) + 'px';
             if (id === 'startEdge') {
-                canvas.style.transform = `translate(${currentVW + ((1 - progress) * maxWidth)}vw, ${currentVH}vh`;
+                canvas.style.transform = `translate(${(-currentH * 100) + ((1 - progress) * maxWidth)}vw, ${(-currentV * 100)}vh`;
             } else {
-                canvas.style.transform = `translate(${currentVW - ((1 - progress) * maxWidth)}vw, ${currentVH}vh`;
+                canvas.style.transform = `translate(${(-currentH * 100) - ((1 - progress) * maxWidth)}vw, ${(-currentV * 100)}vh`;
             }
         } else {
             // Done
             element.style.width = '0px';
-            canvas.style.transform = `translate(${currentVW}vw, ${currentVH}vh`;
+            canvas.style.transform = `translate(${(-currentH * 100)}vw, ${(-currentV * 100)}vh`;
             return;
         }
         requestAnimationFrame(animate);
