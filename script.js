@@ -444,99 +444,43 @@ function setupTouchControls() {
 }
 
 function setupMouseControls() {
-    let startX = 0;
-    let startY = 0;
-    let mouseStartTarget = null; // Stores the element where the mouse down began
-    let isMouseDown = false;
-    let isDraggingFromOutside = false; // Track if we're dragging from outside content
+    let startX, startY;
+    let state = 0; // 0: no state, 1: clicking from outside, 2: clicking and dragging 
 
-    window.addEventListener('mousedown', e => {
+    window.addEventListener('mousedown', (e) => {
         // Check if mouse down started on or inside a content-wrapper
-        const contentWrapper = e.target.closest('.content-wrapper');
-        if (contentWrapper) {
+        if (e.target.closest('.content-wrapper')) {
             return; // Don't handle mouse controls for content areas
         }
 
-        isMouseDown = true;
-        isDraggingFromOutside = true;
-        // Record the starting coordinates and, most importantly, the target element.
         startX = e.clientX;
         startY = e.clientY;
-        mouseStartTarget = e.target;
-
-        // Prevent text selection on content-wrapper elements when dragging from outside
-        const contentWrappers = document.querySelectorAll('.content-wrapper');
-        contentWrappers.forEach(wrapper => {
-            wrapper.style.userSelect = 'none';
-            wrapper.style.webkitUserSelect = 'none';
-            wrapper.style.mozUserSelect = 'none';
-            wrapper.style.msUserSelect = 'none';
-        });
+        state = 1;
     });
 
-    window.addEventListener('mouseup', e => {
-        if (!mouseStartTarget || !isMouseDown) {
-            return; // Exit if the mouse down didn't start properly.
+    window.addEventListener('mousemove', (e) => {
+        if (!e.target.closest('.content-wrapper') && state === 1) {
+            window.getSelection().removeAllRanges();
         }
-
-        const endX = e.clientX;
-        const endY = e.clientY;
-
-        const diffX = startX - endX;
-        const diffY = startY - endY;
-        const swipeThreshold = 50; // Minimum pixel distance to be considered a swipe.
-
-        // --- HORIZONTAL SWIPE ---
-        if (Math.abs(diffX) > Math.abs(diffY)) {
-            if (diffX > swipeThreshold) moveHorizontal(1);
-            else if (diffX < -swipeThreshold) moveHorizontal(-1);
+        if (state === 1) {
+            state = 2;
         }
-        // --- VERTICAL SWIPE ---
-        else {
-            const isSwipeUp = diffY > swipeThreshold; // Mouse moved up (scroll down).
-            const isSwipeDown = diffY < -swipeThreshold; // Mouse moved down (scroll up).
-
-            if (!isSwipeUp && !isSwipeDown) {
-                // Reset selection prevention and exit
-                resetContentSelection();
-                return; // Not a long enough swipe.
-            }
-
-            // Since we already checked that mouse down didn't start on content-wrapper,
-            // we can directly move the panel
-            if (isSwipeUp) moveVertical(1);
-            else if (isSwipeDown) moveVertical(-1);
-        }
-
-        // Reset selection prevention
-        resetContentSelection();
-
-        // Reset for the next mouse event.
-        mouseStartTarget = null;
-        isMouseDown = false;
-        isDraggingFromOutside = false;
     });
 
-    window.addEventListener('mouseleave', () => {
-        // Reset selection prevention and cancel mouse interaction if mouse leaves the window
-        resetContentSelection();
-        mouseStartTarget = null;
-        isMouseDown = false;
-        isDraggingFromOutside = false;
+    window.addEventListener('mouseup', (e) => {
+        if (state !== 2) {
+            return;
+        }
+
+        const deltaX = e.clientX - startX;
+        const deltaY = e.clientY - startY;
+        if (Math.abs(deltaX) > 50 || Math.abs(deltaY) > 50) {
+            if (Math.abs(deltaX) > Math.abs(deltaY)) {
+                deltaX > 0 ? moveHorizontal(-1) : moveHorizontal(1);
+            } else deltaY > 0 ? moveVertical(-1) : moveVertical(1);
+        }
+        state = 0;
     });
-
-    function resetContentSelection() {
-        if (!isDraggingFromOutside) return;
-
-        // Re-enable text selection on content-wrapper elements
-        const contentWrappers = document.querySelectorAll('.content-wrapper');
-        contentWrappers.forEach(wrapper => {
-            wrapper.style.userSelect = '';
-            wrapper.style.webkitUserSelect = '';
-            wrapper.style.mozUserSelect = '';
-            wrapper.style.msUserSelect = '';
-        });
-    }
 }
 
 function setupScrollControls() {
