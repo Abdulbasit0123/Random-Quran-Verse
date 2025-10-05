@@ -445,41 +445,33 @@ function setupTouchControls() {
 
 function setupMouseControls() {
     let startX, startY;
-    let state = 0; // 0: no state, 1: clicking from outside, 2: clicking and dragging 
+    let isClickedAndMovedOutside = false;
 
     window.addEventListener('mousedown', (e) => {
         // Check if mouse down started on or inside a content-wrapper
         if (e.target.closest('.content-wrapper')) {
+            isClickedAndMovedOutside = false;
             return; // Don't handle mouse controls for content areas
         }
-
         startX = e.clientX;
         startY = e.clientY;
-        state = 1;
-    });
-
-    window.addEventListener('mousemove', (e) => {
-        if (!e.target.closest('.content-wrapper') && state === 1) {
+        window.addEventListener('mousemove', (e) => {
             window.getSelection().removeAllRanges();
-        }
-        if (state === 1) {
-            state = 2;
-        }
+            isClickedAndMovedOutside = true;
+        }, { once: true });
     });
 
     window.addEventListener('mouseup', (e) => {
-        if (state !== 2) {
-            return;
-        }
-
+        if (!isClickedAndMovedOutside) return;
         const deltaX = e.clientX - startX;
         const deltaY = e.clientY - startY;
-        if (Math.abs(deltaX) > 50 || Math.abs(deltaY) > 50) {
+        const threshold = 50; // minimum distance to be considered a swipe
+        if (Math.abs(deltaX) > threshold || Math.abs(deltaY) > threshold) {
             if (Math.abs(deltaX) > Math.abs(deltaY)) {
                 deltaX > 0 ? moveHorizontal(-1) : moveHorizontal(1);
             } else deltaY > 0 ? moveVertical(-1) : moveVertical(1);
         }
-        state = 0;
+        isClickedAndMovedOutside = false;
     });
 }
 
@@ -539,7 +531,15 @@ function setupScrollControls() {
 
     }, { passive: false }); // `passive: false` is required to use preventDefault().
 }
-
+function setupActionBtns() {
+    document.getElementById('theme').addEventListener('click', function () {
+        document.body.classList.toggle('light');
+        // Toggle visibility of moon and sun icons based on theme
+        const isLight = document.body.classList.contains('sun');
+        document.getElementById('moon').classList.toggle('hide');
+        document.getElementById('sun').classList.toggle('hide');;
+    });
+}
 
 // Initialize the app
 async function init() {
@@ -551,6 +551,7 @@ async function init() {
         setupTouchControls();
         setupMouseControls();
         setupScrollControls();
+        setupActionBtns();
     } catch (error) {
         console.error('Error initializing app:', error);
     }

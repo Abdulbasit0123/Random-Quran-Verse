@@ -1,3 +1,69 @@
+:root {
+	/* Default/Dark Theme Colors (used when body.light is not present) */
+	--btn-hover-bg: #353535;
+	--btn-active-bg: #252525;
+	--my-dark: #0d1117;
+	--my-white: #d2e1e6;
+}
+
+/* Dark Mode (default) */
+html,
+body {
+	--icon-color: var(--my-white);
+	background-color: var(--my-dark);
+	color: var(--my-white);
+	margin: 0;
+	padding: 0;
+}
+
+/* Light Mode */
+body.light {
+	--icon-color: var(--my-dark);
+	background-color: var(--my-white);
+	color: var(--my-dark);
+	/* Light Theme Overrides */
+	--btn-hover-bg: #f0f0f0;
+	--btn-active-bg: #e0e0e0;
+}
+
+svg {
+	color: var(--icon-color);
+}
+
+.action-buttons {
+	position: fixed; /* Optional: stick to a corner */
+	top: 20px;
+	right: 20px;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	z-index: 20;
+}
+
+.action-buttons button {
+	font-size: 24px;
+	padding: 8px;
+	background-color: #ffffff00;
+	border: 1px solid #aaa;
+	border-radius: 50px;
+	cursor: pointer;
+	transition: background 0.2s;
+	width: 48px;
+	height: 48px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+/* Apply the variables to the buttons */
+body .action-buttons button:hover {
+	background: var(--btn-hover-bg);
+}
+
+body .action-buttons button:active {
+	background: var(--btn-active-bg);
+}
+
 @font-face {
 	font-family: "UthmanicHafs";
 	src: url("./assets/font/Uthmanic-Hafs-Font.otf") format("opentype");
@@ -5,13 +71,6 @@
 	font-style: normal;
 }
 
-html,
-body {
-	background-color: #0d1117;
-	color: #d2e1e6;
-	margin: 0;
-	padding: 0;
-}
 .viewport {
 	width: 100vw;
 	height: 100dvh;
@@ -146,4 +205,8 @@ body {
 }
 .end {
 	left: 0;
+}
+
+.hide {
+	display: none;
 }
