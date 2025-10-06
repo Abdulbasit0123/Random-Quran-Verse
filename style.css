@@ -48,8 +48,7 @@ svg {
 	border-radius: 50px;
 	cursor: pointer;
 	transition: background 0.2s;
-	width: 48px;
-	height: 48px;
+	width: 36px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
