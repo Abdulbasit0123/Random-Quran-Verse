@@ -532,12 +532,53 @@ function setupScrollControls() {
     }, { passive: false }); // `passive: false` is required to use preventDefault().
 }
 function setupActionBtns() {
-    document.getElementById('theme').addEventListener('click', function () {
+    const moreBtn = document.getElementById('moreBtn');
+    const themeBtn = document.getElementById('theme');
+    const fullscreenBtn = document.getElementById('fullscreen-toggle');
+    const languageBtn = document.getElementById('language');
+
+
+    let isToggled = false;
+
+    const animation = lottie.loadAnimation({
+        container: moreBtn,
+        renderer: 'svg',
+        loop: false,
+        autoplay: false,
+        initialSegment: [60, 60],
+        path: './assets/images/moreIcon.json'
+    });
+
+    moreBtn.addEventListener('click', () => {
+        if (isToggled) {
+            document.getElementById('actions').classList.toggle('hide');
+            animation.playSegments([0, 60], true);
+        } else {
+            document.getElementById('actions').classList.toggle('hide');
+            animation.playSegments([60, 120], true);
+        }
+        animation.setSpeed(4);
+        isToggled = !isToggled;
+    });
+
+    themeBtn.addEventListener('click', function () {
         document.body.classList.toggle('light');
         // Toggle visibility of moon and sun icons based on theme
         const isLight = document.body.classList.contains('sun');
         document.getElementById('moon').classList.toggle('hide');
         document.getElementById('sun').classList.toggle('hide');;
+    });
+
+    fullscreenBtn.addEventListener('click', function () {
+        // do the job here
+        if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen(); // No .then() or .catch()
+        } else {
+            document.exitFullscreen();
+        }
+        // swap the button icon
+        document.getElementById('expand').classList.toggle('hide');
+        document.getElementById('minimize').classList.toggle('hide');;
     });
 }
 

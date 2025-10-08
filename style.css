@@ -1,8 +1,9 @@
 :root {
 	/* Default/Dark Theme Colors (used when body.light is not present) */
-	--btn-hover-bg: #353535;
+	--btn-hover-bg: #474747;
 	--btn-active-bg: #252525;
-	--my-dark: #0d1117;
+	/* --my-dark: #0d1117; */
+	--my-dark: #000;
 	--my-white: #d2e1e6;
 }
 
@@ -22,12 +23,13 @@ body.light {
 	background-color: var(--my-white);
 	color: var(--my-dark);
 	/* Light Theme Overrides */
-	--btn-hover-bg: #f0f0f0;
-	--btn-active-bg: #e0e0e0;
+	--btn-hover-bg: #def1f8;
+	--btn-active-bg: #c2d1d5;
 }
 
-svg {
+svg, path {
 	color: var(--icon-color);
+	fill: var(--icon-color);
 }
 
 .action-buttons {
@@ -36,19 +38,23 @@ svg {
 	right: 20px;
 	display: flex;
 	flex-direction: column;
-	gap: 10px;
 	z-index: 20;
+}
+
+#actions {
+	display: flex;
+	flex-direction: column;
 }
 
 .action-buttons button {
 	font-size: 24px;
 	padding: 8px;
 	background-color: #ffffff00;
-	border: 1px solid #aaa;
-	border-radius: 50px;
+	border-radius: 50px; 
+	border: none;
 	cursor: pointer;
 	transition: background 0.2s;
-	width: 36px;
+	width: 38px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -61,6 +67,10 @@ body .action-buttons button:hover {
 
 body .action-buttons button:active {
 	background: var(--btn-active-bg);
+}
+
+.hide {
+	display: none;
 }
 
 @font-face {
@@ -204,8 +214,4 @@ body .action-buttons button:active {
 }
 .end {
 	left: 0;
-}
-
-.hide {
-	display: none;
 }
