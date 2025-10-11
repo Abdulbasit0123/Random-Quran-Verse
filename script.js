@@ -18,8 +18,8 @@ let cachedQuranData = null;
 let cachedTafseerData = null;
 
 // Cache keys for localStorage
-const QURAN_CACHE_KEY = 'quran_data_ar_sahih';
-const TAFSEER_CACHE_KEY = 'tafseer_data_ku_asan';
+const QURAN_CACHE_KEY = 'quran_text';
+const TAFSEER_CACHE_KEY = 'tafseer_text';
 const CACHE_VERSION_KEY = 'quran_cache_version';
 const CURRENT_CACHE_VERSION = '1.0'; // Increment this to invalidate old cache
 
@@ -531,27 +531,35 @@ function setupScrollControls() {
 
     }, { passive: false }); // `passive: false` is required to use preventDefault().
 }
+
 function setupActionBtns() {
+    const viewport = document.getElementById('viewport');
+    const actionButtons = document.querySelector('.action-buttons');
     const themeBtn = document.getElementById('theme');
     const fullscreenBtn = document.getElementById('fullscreen-toggle');
     const languageBtn = document.getElementById('language');
 
+    // show/hide action buttons on double click
+    viewport.addEventListener('dblclick', (e) => {
+        if (e.target.closest('.content-wrapper')) return;
+        e.preventDefault();
+        window.getSelection().removeAllRanges();
+        actionButtons.classList.toggle('hide');
+    });
+
     themeBtn.addEventListener('click', function () {
         document.body.classList.toggle('light');
-        // Toggle visibility of moon and sun icons based on theme
-        const isLight = document.body.classList.contains('sun');
         document.getElementById('moon').classList.toggle('hide');
         document.getElementById('sun').classList.toggle('hide');;
     });
 
     fullscreenBtn.addEventListener('click', function () {
-        // do the job here
         if (!document.fullscreenElement) {
             document.documentElement.requestFullscreen(); // No .then() or .catch()
         } else {
             document.exitFullscreen();
         }
-        // swap the button icon
+        // swap the icon
         document.getElementById('expand').classList.toggle('hide');
         document.getElementById('minimize').classList.toggle('hide');;
     });
