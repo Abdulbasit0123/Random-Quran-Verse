@@ -34,16 +34,11 @@ svg, path {
 
 .action-buttons {
 	position: fixed; /* Optional: stick to a corner */
-	top: 20px;
-	right: 20px;
+	top: 5px;
+	right: 5px;
 	display: flex;
 	flex-direction: column;
 	z-index: 20;
-}
-
-#actions {
-	display: flex;
-	flex-direction: column;
 }
 
 .action-buttons button {
