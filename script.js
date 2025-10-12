@@ -20,8 +20,6 @@ let cachedTafseerData = null;
 // Cache keys for localStorage
 const QURAN_CACHE_KEY = 'quran_text';
 const TAFSEER_CACHE_KEY = 'tafseer_text';
-const QURAN_CACHE_KEY = 'quran_text';
-const TAFSEER_CACHE_KEY = 'tafseer_text';
 const CACHE_VERSION_KEY = 'quran_cache_version';
 const CURRENT_CACHE_VERSION = '1.0'; // Increment this to invalidate old cache
 
