@@ -115,7 +115,7 @@ body .action-buttons button:active {
 
 @font-face {
 	font-family: "UthmanicHafs";
-	src: url(".\assets\font\Uthmanic-Hafs-Font.otf") format("opentype");
+	src: url("./assets/font/Uthmanic-Hafs-Font.otf") format("opentype");
 	font-weight: normal;
 	font-style: normal;
 }
