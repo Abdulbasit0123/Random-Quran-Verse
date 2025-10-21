@@ -1,0 +1,445 @@
+:root {
+	/* Default/Dark Theme Colors (used when body.light is not present) */
+	--btn-hover-bg: #474747;
+	--btn-active-bg: #252525;
+	/* --my-dark: #0d1117; */
+	--my-dark: #000;
+	--my-white: #d2e1e6;
+
+	--scroll-bar-color: #ccc;
+
+	--modal-background-color: #282b2d;
+	--modal-text-color: #d2e1e6;
+	--modal-list-border-color: #50595b;
+	--modal-list-color-hover: #363b3b;
+
+	--modal-input-background-color: #383b3c;
+	--modal-input-border-color: #50595b;
+	--modal-input-border-color-focus: #4c5353;
+	--modal-input-background-color-focus: #282b2d;
+	--modal-button-background-color: #3e4344;
+	--modal-button-background-color-hover: #353a3c;
+	--modal-button-background-color-active: #232628;
+
+	--radio-circle-background-color: #393939;
+	--radio-circle-background-color-checked: #0d1117;
+
+	--radio-circle-border-color: #6d6d6d;
+	--radio-circle-border-color-hover: #a1a1a1;
+	--radio-circle-border-color-checked: #d2e1e6;
+}
+
+/* Dark Mode (default) */
+html,
+body {
+	--icon-color: var(--my-white);
+	background-color: var(--my-dark);
+	color: var(--my-white);
+	margin: 0;
+	padding: 0;
+}
+
+/* Light Mode */
+body.light {
+	--icon-color: var(--my-dark);
+	background-color: var(--my-white);
+	color: var(--my-dark);
+	/* Light Theme Overrides */
+	--btn-hover-bg: #def1f8;
+	--btn-active-bg: #c2d1d5;
+
+	--scroll-bar-color: #a0a0a0;
+
+	--modal-background-color: #d2e1e6;
+	--modal-text-color: #0d1117;
+	--modal-list-border-color: #c0c9cf;
+	--modal-list-color-hover: #cad7dc;
+
+	--modal-input-background-color: #d8e4e8;
+	--modal-input-border-color: #c0c9cf;
+	--modal-input-border-color-focus: #809f9f;
+	--modal-input-background-color-focus: #d2e1e6;
+	--modal-button-background-color: #dbecf2;
+	--modal-button-background-color-hover: #bfced3;
+	--modal-button-background-color-active: #a6afb5;
+
+	--radio-circle-background-color: #d2e1e6;
+	--radio-circle-background-color-checked: #0d1117;
+
+	--radio-circle-border-color: #a6b0b7;
+	--radio-circle-border-color-hover: #8c9297;
+	--radio-circle-border-color-checked: #9b9fa7;
+}
+
+svg,
+path {
+	color: var(--icon-color);
+	fill: var(--icon-color);
+}
+
+.action-buttons {
+	position: fixed; /* Optional: stick to a corner */
+	top: 5px;
+	right: 5px;
+	display: flex;
+	flex-direction: column;
+	z-index: 2;
+}
+
+.action-buttons button {
+	font-size: 24px;
+	padding: 8px;
+	background-color: #ffffff00;
+	border-radius: 50px;
+	border: none;
+	cursor: pointer;
+	transition: background 0.2s;
+	width: 38px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+/* Apply the variables to the buttons */
+body .action-buttons button:hover {
+	background: var(--btn-hover-bg);
+}
+
+body .action-buttons button:active {
+	background: var(--btn-active-bg);
+}
+
+.hide {
+	display: none !important;
+}
+
+@font-face {
+	font-family: "UthmanicHafs";
+	src: url(".\assets\font\Uthmanic-Hafs-Font.otf") format("opentype");
+	font-weight: normal;
+	font-style: normal;
+}
+
+.viewport {
+	width: 100vw;
+	height: 100dvh;
+	overflow: hidden;
+	position: relative;
+}
+.canvas {
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: flex;
+	transition: transform 0.5s ease;
+	/* flex-wrap: nowrap; */
+}
+.panel {
+	position: absolute;
+	width: 100vw;
+	height: 100dvh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.content-wrapper {
+	padding: 0.5rem 1rem;
+	width: 85%;
+	max-height: 85dvh;
+	overflow: auto;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: flex-start;
+	text-align: center;
+
+	-webkit-mask-image: linear-gradient(
+		to bottom,
+		transparent,
+		black 20px,
+		black calc(100% - 20px),
+		transparent
+	);
+	mask-image: linear-gradient(
+		to bottom,
+		transparent,
+		black 20px,
+		black calc(100% - 20px),
+		transparent
+	);
+}
+
+.content-wrapper > * {
+	margin-bottom: 0.3rem;
+}
+
+.quran {
+	direction: rtl;
+	font-family: "UthmanicHafs";
+	font-size: 1.8rem;
+}
+
+.tafseer {
+	font-family: "Calibri", Arial, sans-serif;
+	font-size: 1.4rem;
+}
+
+.source {
+	direction: rtl;
+	all: unset;
+	font-family: "UthmanicHafs";
+	font-size: 1.3rem;
+	cursor: pointer;
+}
+
+.loading {
+	align-items: center;
+	justify-content: center;
+	width: 100vw;
+	height: 100dvh;
+}
+
+#skeleton {
+	max-width: 100%;
+	max-height: 100%;
+	display: block;
+	margin: auto;
+	animation: skeleton-fade 3s ease infinite;
+}
+
+@keyframes skeleton-fade {
+	0% {
+		opacity: 0;
+	}
+	50% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+	}
+}
+
+#spinner {
+	width: 1.8rem;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	animation: spinner-rotate 1.3s linear infinite;
+}
+@keyframes spinner-rotate {
+	from {
+		transform: translate(-50%, -50%) rotate(0deg);
+	}
+	to {
+		transform: translate(-50%, -50%) rotate(-360deg);
+	}
+}
+
+.warning-edge {
+	position: fixed;
+	top: 0;
+	width: 0px; /* Start at 0px */
+	height: 100vh;
+	background-color: rgb(255, 100, 100);
+}
+.start {
+	right: 0;
+}
+.end {
+	left: 0;
+}
+
+/* --- Modal Backdrop (The dark overlay) --- */
+.modal-backdrop {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.3); /* Semi-transparent dark overlay */
+	backdrop-filter: blur(3px);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 3;
+}
+
+/* --- Language Modal style --- */
+.modal-content {
+	font-family: "Calibri", "Gill Sans", "Gill Sans MT", "Trebuchet MS",
+		sans-serif;
+	width: 90%;
+	max-width: 400px;
+	padding: 25px;
+	padding-top: 10px;
+	color: var(--modal-text-color);
+	background-color: var(--modal-background-color);
+	border-radius: 16px;
+	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+	box-sizing: border-box;
+	position: relative;
+}
+
+#close-modal {
+	all: unset;
+	display: inline-block;
+	cursor: pointer;
+}
+
+#close-modal svg {
+	border-radius: 50px;
+	width: 24px;
+	margin: 0;
+	padding: 3px;
+	position: absolute;
+	top: 10px;
+	right: 10px;
+}
+#close-modal:hover svg {
+	background-color: var(--btn-hover-bg);
+}
+#close-modal:active svg {
+	background-color: var(--btn-active-bg);
+}
+
+header {
+	width: 46px;
+	margin: auto;
+	padding: 5px;
+}
+
+#search-input {
+	width: 100%;
+	padding: 10px 15px;
+	margin-bottom: 10px;
+	border: 1px solid var(--modal-input-border-color);
+	border-radius: 8px;
+	box-sizing: border-box;
+	font-size: 1em;
+	background-color: var(--modal-input-background-color);
+	color: var(--modal-text-color);
+}
+#search-input:focus {
+	border-color: var(--modal-input-border-color-focus);
+	background-color: var(--modal-input-background-color-focus);
+	outline: none;
+}
+
+/* --- Language List --- */
+#language-list {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	max-height: 175px;
+	overflow-y: auto;
+	margin: 15px 0;
+	/* Custom scrollbar */
+	scrollbar-color: var(--scroll-bar-color) transparent;
+	scrollbar-width: thin;
+}
+
+ul {
+	-webkit-mask-image: linear-gradient(
+		to bottom,
+		transparent,
+		black 15px,
+		black calc(100% - 15px),
+		transparent
+	);
+	mask-image: linear-gradient(
+		to bottom,
+		transparent,
+		black 15px,
+		black calc(100% - 15px),
+		transparent
+	);
+}
+
+li {
+	display: flex;
+	justify-content: start;
+	border-bottom: 0.1px solid var(--modal-list-border-color);
+	align-items: center;
+	padding: 12px 0;
+	border-radius: 8px;
+	font-size: 12px;
+}
+
+li:hover {
+	background-color: var(--modal-list-color-hover);
+}
+
+li:last-child {
+	border-bottom: none; /* No line under the last item */
+}
+
+label {
+	width: 100%;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	cursor: pointer;
+}
+
+/* input[type="radio"] {
+	background-color: var(--modal-input-background-color);
+	width: 16px;
+	height: 16px;
+	margin-right: 10px;
+	margin-left: 10px;
+} */
+
+/* new */
+input[type="radio"] {
+	appearance: none;
+	-webkit-appearance: none;
+	width: 16px;
+	height: 16px;
+	border: 2px solid var(--radio-circle-border-color);
+	border-radius: 50%;
+	outline: none;
+	cursor: pointer;
+	vertical-align: middle;
+	margin-right: 6px;
+	background-color: var(--radio-circle-background-color);
+	transition: border 0.1s;
+}
+
+/* Hover effect */
+input[type="radio"]:hover {
+	border-color: var(--radio-circle-border-color-hover);
+}
+
+/* Checked state */
+input[type="radio"]:checked {
+	background-color: var(--radio-circle-background-color-checked);
+	border: 4.5px solid var(--radio-circle-border-color-checked);
+}
+/* end */
+
+#save-language {
+	width: 100%;
+	padding: 4px;
+	background-color: var(--modal-button-background-color);
+	color: #333;
+	border: none;
+	border-radius: 8px;
+	cursor: pointer;
+	transition: background-color 0.2s;
+	margin-top: 15px;
+}
+#save-language svg {
+	width: 2rem;
+}
+
+#save-language:hover {
+	background-color: var(--modal-button-background-color-hover);
+}
+#save-language:active {
+	background-color: var(--modal-button-background-color-active);
+}
