@@ -82,22 +82,24 @@ const worker = new Worker(new URL('./contentWorker.js', import.meta.url), { type
 worker.onmessage = (event) => {
     const { status, type, quran, tafseer, message } = event.data;
 
-    if (type === 'loadContent' && status === 'success') {
-        Object.assign(content, { quran, tafseer });
-        saveToCache(quran, tafseer);
-        isContentLoaded = true;
-    } else {
+    if (status === 'error') {
         console.error('Worker error:', message);
+        return;
     }
 
-    if (type === 'loadNewTafseer' && status === 'success') {
-        content.tafseer = tafseer;
-        updateCache(tafseer);
-        cleanCanvas();
-        panelMap.clear();
-        createPanel(currentSurahIndex, currentAyahIndex);
-    } else {
-        console.error('Worker error:', message);
+    switch (type) {
+        case 'loadContent':
+            Object.assign(content, { quran, tafseer });
+            saveToCache(quran, tafseer);
+            isContentLoaded = true;
+            break;
+        case 'loadNewTafseer':
+            content.tafseer = tafseer;
+            updateCache(tafseer);
+            cleanCanvas();
+            panelMap.clear();
+            createPanel(currentSurahIndex, currentAyahIndex);
+            break;
     }
 };
 

@@ -1,4 +1,3 @@
-//there's an error while changing the language, fix it.
 self.onmessage = async (event) => {
     const { type, language } = event.data;
 
