@@ -62,9 +62,8 @@ export async function loadFromIDB(key) {
     }
 }
 
-/**
- * Clears specific content items and the version from IndexedDB.
- */
+
+//Clears specific content items and the version from IndexedDB.
 export async function clearIDBData() {
     try {
         const database = await openDB();
@@ -75,7 +74,7 @@ export async function clearIDBData() {
         await requestToPromise(store.delete('QURAN_CONTENT'));
         await requestToPromise(store.delete('CONTENT_VERSION'));
 
-        console.log('Core data items cleared from IndexedDB.');
+        console.log('IDB cleared.');
 
     } catch (error) {
         console.error("Failed to clear IDB data:", error);
