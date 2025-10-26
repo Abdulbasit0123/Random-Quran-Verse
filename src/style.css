@@ -78,7 +78,7 @@ path {
 }
 
 .action-buttons {
-	position: fixed; /* Optional: stick to a corner */
+	position: fixed;
 	top: 5px;
 	right: 5px;
 	display: flex;
@@ -100,7 +100,6 @@ path {
 	justify-content: center;
 }
 
-/* Apply the variables to the buttons */
 body .action-buttons button:hover {
 	background: var(--btn-hover-bg);
 }
@@ -132,7 +131,6 @@ body .action-buttons button:active {
 	left: 0;
 	display: flex;
 	transition: transform 0.5s ease;
-	/* flex-wrap: nowrap; */
 }
 .panel {
 	position: absolute;
@@ -193,53 +191,6 @@ body .action-buttons button:active {
 	cursor: pointer;
 }
 
-.loading {
-	align-items: center;
-	justify-content: center;
-	width: 100vw;
-	height: 100dvh;
-}
-
-#skeleton {
-	max-width: 100%;
-	max-height: 100%;
-	display: block;
-	margin: auto;
-	animation: skeleton-fade 3s ease infinite;
-}
-
-@keyframes skeleton-fade {
-	0% {
-		opacity: 0;
-	}
-	50% {
-		opacity: 1;
-	}
-	100% {
-		opacity: 0;
-	}
-}
-
-#spinner {
-	width: 1.8rem;
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	animation: spinner-rotate 1.3s linear infinite;
-}
-@keyframes spinner-rotate {
-	from {
-		transform: translate(-50%, -50%) rotate(0deg);
-	}
-	to {
-		transform: translate(-50%, -50%) rotate(-360deg);
-	}
-}
-
 .warning-edge {
 	position: fixed;
 	top: 0;
@@ -254,14 +205,14 @@ body .action-buttons button:active {
 	left: 0;
 }
 
-/* --- Modal Backdrop (The dark overlay) --- */
+/* Modal Backdrop (The dark overlay)*/
 .modal-backdrop {
 	position: fixed;
 	top: 0;
 	left: 0;
 	width: 100%;
 	height: 100%;
-	background-color: rgba(0, 0, 0, 0.3); /* Semi-transparent dark overlay */
+	background-color: rgba(0, 0, 0, 0.3);
 	backdrop-filter: blur(3px);
 	display: flex;
 	justify-content: center;
@@ -269,7 +220,7 @@ body .action-buttons button:active {
 	z-index: 3;
 }
 
-/* --- Language Modal style --- */
+/* Language Modal style */
 .modal-content {
 	font-family: "Calibri", "Gill Sans", "Gill Sans MT", "Trebuchet MS",
 		sans-serif;
@@ -330,7 +281,7 @@ header {
 	outline: none;
 }
 
-/* --- Language List --- */
+/* Language List */
 #language-list {
 	list-style: none;
 	padding: 0;
@@ -386,15 +337,6 @@ label {
 	cursor: pointer;
 }
 
-/* input[type="radio"] {
-	background-color: var(--modal-input-background-color);
-	width: 16px;
-	height: 16px;
-	margin-right: 10px;
-	margin-left: 10px;
-} */
-
-/* new */
 input[type="radio"] {
 	appearance: none;
 	-webkit-appearance: none;
@@ -410,17 +352,14 @@ input[type="radio"] {
 	transition: border 0.1s;
 }
 
-/* Hover effect */
 input[type="radio"]:hover {
 	border-color: var(--radio-circle-border-color-hover);
 }
 
-/* Checked state */
 input[type="radio"]:checked {
 	background-color: var(--radio-circle-background-color-checked);
 	border: 4.5px solid var(--radio-circle-border-color-checked);
 }
-/* end */
 
 #save-language {
 	width: 100%;
