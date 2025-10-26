@@ -11,7 +11,32 @@ let currentLanguage = 'ku.asan';
 let isContentLoaded = false;
 let content = {};
 
-// ... (getContent function remains the same as it handles live API fetch)
+export async function getContent(surahIndex, ayahIndex) {
+    let quranAyahText, tafseerAyahText, surahName;
+
+    if (isContentLoaded) {
+        quranAyahText = content.quran.data.surahs[surahIndex].ayahs[ayahIndex].text;
+        tafseerAyahText = content.tafseer.data.surahs[surahIndex].ayahs[ayahIndex].text;
+        surahName = content.quran.data.surahs[surahIndex].name;
+        console.log('loaded from localstorage');
+    } else {
+        try {
+            const res = await fetch(`https://api.alquran.cloud/v1/ayah/${surahIndex + 1}:${ayahIndex + 1}/editions/ar.sahih,${currentLanguage}`);
+            if (!res.ok) throw new Error('Failed to fetch data from API');
+            const data = await res.json();
+
+            quranAyahText = data.data[0].text;
+            tafseerAyahText = data.data[1].text;
+            surahName = data.data[0].surah.name;
+            console.log('loaded from api');
+        } catch (error) {
+            throw error;
+        }
+    }
+    surahName = surahName.replace('سُورَةُ ', '');
+    if (ayahIndex === 0 && surahIndex > 0) quranAyahText = quranAyahText.replace('بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ', '');
+    return { quranAyahText, tafseerAyahText, surahName };
+}
 
 /**
  * Checks if the cached data version is valid.
@@ -21,10 +46,6 @@ async function isCacheValid() {
     const cachedVersion = await loadFromIDB('CACHE_VERSION');
     return cachedVersion === CURRENT_CACHE_VERSION;
 }
-
-// REMOVE the old loadFromCache, clearCache, saveToCache, and updateCache functions
-// because they are replaced by the new IDB functions (loadFromIDB, clearIDBCache, saveToIDB)
-// loadContent.js
 
 // handle messages from worker
 worker.onmessage = async (event) => { // IMPORTANT: Make the handler async
