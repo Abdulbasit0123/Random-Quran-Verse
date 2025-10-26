@@ -1,12 +1,9 @@
-// loadContent.js
-
-import { showLoading, hideLoading } from '../components/loading.js';
 import { createPanel, currentAyahIndex, currentSurahIndex, panelMap } from '../components/panel/panel.js';
 import { cleanCanvas } from './cleanCanvas.js';
 // Import the new IndexedDB utilities
-import { saveToIDB, loadFromIDB, clearIDBCache } from './indexedDB_utils.js'; // Assuming the utilities file is named indexedDB_utils.js
+import { saveToIDB, loadFromIDB, clearIDBData } from './indexedDB_utils.js'; // Assuming the utilities file is named indexedDB_utils.js
 
-const CURRENT_CACHE_VERSION = '1.0';
+const CURRENT_CONTENT_VERSION = '1.0';
 let currentLanguage = 'ku.asan';
 let isContentLoaded = false;
 let content = {};
@@ -39,14 +36,14 @@ export async function getContent(surahIndex, ayahIndex) {
 }
 
 /**
- * Checks if the cached data version is valid.
+ * Checks if the content data version is valid.
  */
-async function isCacheValid() {
+async function isDataValid() {
     // Check version from IndexedDB
-    const cachedVersion = await loadFromIDB('CACHE_VERSION');
-    return cachedVersion === CURRENT_CACHE_VERSION;
+    const contentVersion = await loadFromIDB('CONTENT_VERSION');
+    return contentVersion === CURRENT_CONTENT_VERSION;
 }
-
+const worker = new Worker(new URL('./contentWorker.js', import.meta.url), { type: 'module' });
 // handle messages from worker
 worker.onmessage = async (event) => { // IMPORTANT: Make the handler async
     const { status, type, quran, tafseer, message } = event.data;
@@ -60,9 +57,9 @@ worker.onmessage = async (event) => { // IMPORTANT: Make the handler async
         case 'loadContent':
             Object.assign(content, { quran, tafseer });
             // --- IDB SAVING ---
-            await saveToIDB('QURAN_CACHE', quran);
+            await saveToIDB('QURAN_CONTENT', quran);
             await saveToIDB(currentLanguage, tafseer);
-            await saveToIDB('CACHE_VERSION', CURRENT_CACHE_VERSION); // Save the version
+            await saveToIDB('CONTENT_VERSION', CURRENT_CONTENT_VERSION); // Save the version
             // ------------------
             isContentLoaded = true;
             break;
@@ -87,15 +84,15 @@ export async function loadContent() {
 
     let quran = null;
     let tafseer = null;
-    const cacheValid = await isCacheValid();
+    const dataValid = await isDataValid();
 
-    if (cacheValid) {
+    if (dataValid) {
         // --- IDB LOADING ---
-        quran = await loadFromIDB('QURAN_CACHE');
+        quran = await loadFromIDB('QURAN_CONTENT');
         tafseer = await loadFromIDB(currentLanguage);
         // ------------------
     } else {
-        await clearIDBCache(); // Clear old version cache
+        await clearIDBData(); // Clear old version data
     }
 
     if (quran && tafseer) {
@@ -105,7 +102,7 @@ export async function loadContent() {
         return;
     }
 
-    // Not in cache / Cache invalid → ask worker to fetch
+    // Not in data / Data invalid → ask worker to fetch
     worker.postMessage({ type: 'loadContent', language: currentLanguage });
 }
 // loadContent.js
@@ -114,11 +111,11 @@ export async function updateLanguage(newLanguageId) {
     if (newLanguageId === currentLanguage) return;
 
     // --- IDB LOADING ---
-    const cachedTafseer = await loadFromIDB(newLanguageId);
+    const contentTafseer = await loadFromIDB(newLanguageId);
     // -------------------
 
-    if (cachedTafseer !== null) {
-        content.tafseer = cachedTafseer;
+    if (contentTafseer !== null) {
+        content.tafseer = contentTafseer;
         cleanCanvas();
         panelMap.clear();
         createPanel(currentSurahIndex, currentAyahIndex);

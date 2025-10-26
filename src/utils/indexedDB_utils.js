@@ -1,6 +1,6 @@
-const DB_NAME = 'QuranAppDB';
+const DB_NAME = 'contentDB';
 const DB_VERSION = 1;
-const STORE_NAME = 'ContentStore';
+const STORE_NAME = 'contentStore';
 
 // Global variable to hold the database connection
 let db = null;
@@ -63,21 +63,21 @@ export async function loadFromIDB(key) {
 }
 
 /**
- * Clears specific cached items and the version from IndexedDB.
+ * Clears specific content items and the version from IndexedDB.
  */
-export async function clearIDBCache() {
+export async function clearIDBData() {
     try {
         const database = await openDB();
         const transaction = database.transaction([STORE_NAME], 'readwrite');
         const store = transaction.objectStore(STORE_NAME);
 
-        // Delete 'QURAN_CACHE' and the 'CACHE_VERSION' key
-        await requestToPromise(store.delete('QURAN_CACHE'));
-        await requestToPromise(store.delete('CACHE_VERSION'));
+        // Delete 'QURAN_CONTENT' and the 'CONTENT_VERSION' key
+        await requestToPromise(store.delete('QURAN_CONTENT'));
+        await requestToPromise(store.delete('CONTENT_VERSION'));
 
-        console.log('Core cache items cleared from IndexedDB.');
+        console.log('Core data items cleared from IndexedDB.');
 
     } catch (error) {
-        console.error("Failed to clear IDB cache:", error);
+        console.error("Failed to clear IDB data:", error);
     }
 }
