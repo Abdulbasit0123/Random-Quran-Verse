@@ -1,5 +1,7 @@
 import { toggleLanguageModal } from '../components/languageModal.js';
-import { viewport, actionButtons, themeBtn, fullscreenBtn, languageBtn, moonIcon, sunIcon, expandIcon, minimizeIcon, } from '../dom.js';
+import { toggleRangeModal } from '../components/rangeModal.js';
+import { viewport, modalBackdrop, actionButtons, themeBtn, fullscreenBtn, rangeBtn, languageBtn, moonIcon, sunIcon, expandIcon, minimizeIcon, closeModal, } from '../dom.js';
+import { hideModal } from '../utils/hideModal.js';
 
 export function setupActionBtns() {
 
@@ -23,5 +25,13 @@ export function setupActionBtns() {
         expandIcon.classList.toggle('hide');
         minimizeIcon.classList.toggle('hide');
     });
+    rangeBtn.addEventListener('click', toggleRangeModal);
     languageBtn.addEventListener('click', toggleLanguageModal);
+
+    closeModal.addEventListener('click', hideModal);
+    modalBackdrop.addEventListener('click', (event) => {
+        if (event.target === modalBackdrop) {
+            hideModal();
+        }
+    });
 }

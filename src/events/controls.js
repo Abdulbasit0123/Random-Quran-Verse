@@ -1,6 +1,9 @@
-import { areEventsPaused } from '../components/languageModal.js';
 import { movePanelHorizontally, movePanelVertically } from '../components/panel/panel.js';
 
+export let areEventsPaused = false;
+export function setAreEventsPaused(value) { 
+    areEventsPaused = value; 
+}
 // Keyboard, touch, mouse, scroll controls
 export function setupKeyboardControls() {
     window.addEventListener('keydown', (e) => {
