@@ -82,6 +82,10 @@ path {
 }
 
 .action-buttons {
+	background-color: rgba(0, 0, 0, 0);
+	border-radius: 25px;
+	backdrop-filter: blur(2px);
+
 	position: fixed;
 	top: 5px;
 	right: 5px;

@@ -9,7 +9,14 @@ export function setupActionBtns() {
         if (e.target.closest('.content-wrapper')) return;
         e.preventDefault();
         window.getSelection().removeAllRanges();
-        actionButtons.classList.toggle('hide');
+        if (actionButtons.classList.contains('hide')) {
+            actionButtons.classList.remove('hide');
+            setTimeout(() => {
+                actionButtons.classList.add('hide');
+            }, 7000);
+        } else {
+            actionButtons.classList.add('hide');
+        }
     });
     themeBtn.addEventListener('click', function () {
         document.body.classList.toggle('light');
@@ -34,4 +41,7 @@ export function setupActionBtns() {
             hideModal();
         }
     });
+    setTimeout(() => {
+        actionButtons.classList.add('hide');
+    }, 7000);
 }
