@@ -1,7 +1,7 @@
 import { disableRangeBtn, modalBackdrop, rangeModal, saveRangeBtn } from '../dom';
 import { setAreEventsPaused } from '../events/controls';
 import { startingSurahSelection, startingAyahSelection, endingSurahSelection, endingAyahSelection } from '../dom';
-import { surahLength } from './panel/panel';
+import { range, surahLength, usedRange } from './panel/panel';
 import { hideModal } from '../utils/hideModal';
 
 let surahNames = ['ٱلْفَاتِحَةِ', 'البَقَرَةِ', 'آلِ عِمۡرَانَ', 'النِّسَاءِ', 'المَائـِدَةِ', 'الأَنۡعَامِ', 'الأَعۡرَافِ', 'الأَنفَالِ', 'التَّوۡبَةِ', 'يُونُسَ', 'هُودٍ', 'يُوسُفَ', 'الرَّعۡدِ', 'إِبۡرَاهِيمَ', 'الحِجۡرِ', 'النَّحۡلِ', 'الإِسۡرَاءِ', 'الكَهۡفِ', 'مَرۡيَمَ', 'طه', 'الأَنبِيَاءِ', 'الحَجِّ', 'المُؤۡمِنُونَ', 'النُّورِ', 'الفُرۡقَانِ', 'الشُّعَرَاءِ', 'النَّمۡلِ', 'القَصَصِ', 'العَنكَبُوتِ', 'الرُّومِ', 'لُقۡمَانَ', 'السَّجۡدَةِ', 'الأَحۡزَابِ', 'سَبَإٍ', 'فَاطِرٍ', 'يسٓ', 'الصَّافَّاتِ', 'صٓ', 'الزُّمَرِ', 'غَافِرٍ', 'فُصِّلَتۡ', 'الشُّورَىٰ', 'الزُّخۡرُفِ', 'الدُّخَانِ', 'الجَاثِيَةِ', 'الأَحۡقَافِ', 'مُحَمَّدٍ', 'الفَتۡحِ', 'الحُجُرَاتِ', 'قٓ', 'الذَّارِيَاتِ', 'الطُّورِ', 'النَّجۡمِ', 'القَمَرِ', 'الرَّحۡمَٰن', 'الوَاقِعَةِ', 'الحَدِيدِ', 'المُجَادلَةِ', 'الحَشۡرِ', 'المُمۡتَحنَةِ', 'الصَّفِّ', 'الجُمُعَةِ', 'المُنَافِقُونَ', 'التَّغَابُنِ', 'الطَّلَاقِ', 'التَّحۡرِيمِ', 'المُلۡكِ', 'القَلَمِ', 'الحَاقَّةِ', 'المَعَارِجِ', 'نُوحٍ', 'الجِنِّ', 'المُزَّمِّلِ', 'المُدَّثِّرِ', 'القِيَامَةِ', 'الإِنسَانِ', 'المُرۡسَلَاتِ', 'النَّبَإِ', 'النَّازِعَاتِ', 'عَبَسَ', 'التَّكۡوِيرِ', 'الانفِطَارِ', 'المُطَفِّفِينَ', 'الانشِقَاقِ', 'البُرُوجِ', 'الطَّارِقِ', 'الأَعۡلَىٰ', 'الغَاشِيَةِ', 'الفَجۡرِ', 'البَلَدِ', 'الشَّمۡسِ', 'اللَّيۡلِ', 'الضُّحَىٰ', 'الشَّرۡحِ', 'التِّينِ', 'العَلَقِ', 'القَدۡرِ', 'البَيِّنَةِ', 'الزَّلۡزَلَةِ', 'العَادِيَاتِ', 'القَارِعَةِ', 'التَّكَاثُرِ', 'العَصۡرِ', 'الهُمَزَةِ', 'الفِيلِ', 'قُرَيۡشٍ', 'المَاعُونِ', 'الكَوۡثَرِ', 'الكَافِرُونَ', 'النَّصۡرِ', 'المَسَدِ', 'الإِخۡلَاصِ', 'الفَلَقِ', 'النَّاسِ'];
@@ -23,7 +23,7 @@ export function toggleRangeModal() {
         const ssName = document.createElement('label');
 
         ssOption.type = 'radio';
-        ssOption.id = `ss${index }`;
+        ssOption.id = `ss${index}`;
         ssOption.value = `${index}`;
         ssOption.name = 'ss';
         ssOption.classList.add('modal-input');
@@ -127,21 +127,24 @@ disableRangeBtn.addEventListener('click', () => {
 });
 saveRangeBtn.addEventListener('click', () => {
 
+    range.length = 0;
+    usedRange.length = 0;
+    
     let ssi = Number(document.querySelector('input[name="ss"]:checked').value);
     let sai = Number(document.querySelector('input[name="sa"]:checked').value);
     let esi = Number(document.querySelector('input[name="es"]:checked').value);
     let eai = Number(document.querySelector('input[name="ea"]:checked').value);
-    
-    if(ssi < esi){
-        startingSurahIndex = ssi;
-        startingAyahIndex = sai;
-        endingSurahIndex = esi;
-        endingAyahIndex = eai;
-    } else {
+
+    if (ssi > esi) {
         startingSurahIndex = esi;
         startingAyahIndex = eai;
         endingSurahIndex = ssi;
         endingAyahIndex = sai;
+    } else {
+        startingSurahIndex = ssi;
+        startingAyahIndex = sai;
+        endingSurahIndex = esi;
+        endingAyahIndex = eai;
     }
 
     isRangeEnabled = true;

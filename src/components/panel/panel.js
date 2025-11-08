@@ -14,6 +14,9 @@ export let currentAyahIndex = null;
 
 export const panelMap = new Map();
 
+export let range = [];
+export let usedRange = [];
+
 function createElement(tag, className, text) {
     const element = document.createElement(tag);
     if (className) element.className = className;
@@ -64,24 +67,55 @@ export function createRandomPanel() {
     createPanel(surahIndex, ayahIndex);
 }
 
-function getRandomNumberBetween(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
+// function getRandomNumberBetween(min, max) {
+//     return Math.floor(Math.random() * (max - min + 1)) + min;
+// }
+
+function generateTheRange() {
+    if (startingSurahIndex === endingSurahIndex) {//if they are the same surah
+        for (let i = startingAyahIndex; i <= endingAyahIndex; i++) {
+            range.push([startingSurahIndex, i]);
+        }
+    } else {//if they are not the same surah
+        for (let i = startingSurahIndex; i <= endingSurahIndex; i++) {
+            if (i === startingSurahIndex) {
+                for (let j = startingAyahIndex; j <= surahLength[(i - 1)]; j++) {
+                    range.push([i, j]);
+                }
+            }
+            if (i > startingSurahIndex && i < endingSurahIndex) {
+                for (let j = 1; j <= surahLength[(i - 1)]; j++) {
+                    range.push([i, j]);
+                }
+            }
+            if (i === endingSurahIndex) {
+                for (let j = 1; j <= endingAyahIndex; j++) {
+                    range.push([i, j]);
+                }
+            }
+        }
+    }
+}
+
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
+function getRandomAyahInTheRange() {
+    if (!range.length) {//this is the same as range.length === 0
+        generateTheRange();
+    }
+    if (!usedRange.length) {
+        usedRange = structuredClone(shuffleArray(range));
+    }
+    return usedRange.pop();
 }
 
 export function createRandomPanelBetweenRange() {
-    let surahIndex = getRandomNumberBetween(startingSurahIndex, endingSurahIndex);
-    let ayahIndex = 1;
-    if (startingSurahIndex === endingSurahIndex) {
-        ayahIndex = getRandomNumberBetween(startingAyahIndex, endingAyahIndex);
-    } else {
-        if (surahIndex === startingSurahIndex) {
-            ayahIndex = getRandomNumberBetween(startingAyahIndex, surahLength[startingSurahIndex - 1]);
-        } else if (surahIndex === endingSurahIndex) {
-            ayahIndex = getRandomNumberBetween(1, endingAyahIndex);
-        } else {
-            ayahIndex = getRandomNumberBetween(1, surahLength[surahIndex - 1]);
-        }
-    }
+    let [surahIndex, ayahIndex] = getRandomAyahInTheRange();
     surahIndex -= 1;
     ayahIndex -= 1;
     createPanel(surahIndex, ayahIndex);
