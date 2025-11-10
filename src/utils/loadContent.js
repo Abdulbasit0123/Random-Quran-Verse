@@ -91,7 +91,9 @@ export async function loadContent() {
     }
 
     // Not in DB / DB invalid → ask worker to fetch
-    worker.postMessage({ type: 'loadContent', language: currentLanguage });
+    setTimeout(() => {
+        worker.postMessage({ type: 'loadContent', language: currentLanguage });
+    }, 1500);
 }
 
 export async function updateLanguage(newLanguageId) {
@@ -100,8 +102,8 @@ export async function updateLanguage(newLanguageId) {
         hideTafseer();
         return;
     }
-    if(newLanguageId !== 'none'){
-        localStorage.setItem('currentLanguage', newLanguageId)
+    if (newLanguageId !== 'none') {
+        localStorage.setItem('currentLanguage', newLanguageId);
         showTafseer();
     }
     if (newLanguageId === currentLanguage) return;
