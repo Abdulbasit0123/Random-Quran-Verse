@@ -15,6 +15,9 @@ export const sunIcon = document.getElementById('sun');
 export const expandIcon = document.getElementById('expand');
 export const minimizeIcon = document.getElementById('minimize');
 
+export const spinIcon = document.getElementById('spin');
+export const storedIcon = document.getElementById('stored');
+
 export const closeModal = document.querySelector('#close-modal');
 export const modalBackdrop = document.querySelector('.modal-backdrop');
 

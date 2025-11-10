@@ -1,6 +1,7 @@
 import { createPanel, currentAyahIndex, currentSurahIndex, panelMap } from '../components/panel/panel.js';
 import { cleanCanvas } from './cleanCanvas.js';
 import { saveToIDB, loadFromIDB, clearIDBData } from './indexedDB_utils.js';
+import { hideLoading, showLoading } from './loadingIcon.js';
 import { hideTafseer, showTafseer } from './toggleTafseer.js';
 
 const CURRENT_CONTENT_VERSION = '1.0';
@@ -59,11 +60,14 @@ worker.onmessage = async (event) => {
             await saveToIDB('CONTENT_VERSION', CURRENT_CONTENT_VERSION);
 
             isContentLoaded = true;
+            hideLoading();
             break;
         case 'loadNewTafseer':
             content.tafseer = tafseer;
             await saveToIDB(currentLanguage, tafseer);
 
+            hideLoading();
+            showTafseer();
             cleanCanvas();
             panelMap.clear();
             createPanel(currentSurahIndex, currentAyahIndex);
@@ -93,6 +97,7 @@ export async function loadContent() {
     // Not in DB / DB invalid → ask worker to fetch
     setTimeout(() => {
         worker.postMessage({ type: 'loadContent', language: currentLanguage });
+        showLoading();
     }, 1500);
 }
 
@@ -120,5 +125,7 @@ export async function updateLanguage(newLanguageId) {
     }
 
     worker.postMessage({ type: 'loadNewTafseer', language: newLanguageId });
+    showLoading();
+    hideTafseer();
     currentLanguage = newLanguageId;
 }
