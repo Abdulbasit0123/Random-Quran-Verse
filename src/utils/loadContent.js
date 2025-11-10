@@ -1,9 +1,10 @@
 import { createPanel, currentAyahIndex, currentSurahIndex, panelMap } from '../components/panel/panel.js';
 import { cleanCanvas } from './cleanCanvas.js';
 import { saveToIDB, loadFromIDB, clearIDBData } from './indexedDB_utils.js';
+import { hideTafseer, showTafseer } from './toggleTafseer.js';
 
 const CURRENT_CONTENT_VERSION = '1.0';
-let currentLanguage = 'ku.asan'; // this is the default tafseer language
+let currentLanguage = (localStorage.getItem('currentLanguage') || 'ku.asan'); // this is the default tafseer language
 let isContentLoaded = false;
 let content = {};
 
@@ -94,6 +95,15 @@ export async function loadContent() {
 }
 
 export async function updateLanguage(newLanguageId) {
+
+    if (newLanguageId === 'none') {
+        hideTafseer();
+        return;
+    }
+    if(newLanguageId !== 'none'){
+        localStorage.setItem('currentLanguage', newLanguageId)
+        showTafseer();
+    }
     if (newLanguageId === currentLanguage) return;
 
     const contentTafseer = await loadFromIDB(newLanguageId);

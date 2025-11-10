@@ -74,7 +74,6 @@ body.light {
 
 	--surah-number-color: #777;
 }
-
 svg,
 path {
 	color: var(--icon-color);
@@ -301,6 +300,14 @@ header {
 	scrollbar-width: thin;
 }
 
+#language-list > li:nth-child(1) > label > svg {
+	width: 24px;
+}
+#language-list > li:nth-child(1) > .language-label {
+	display: flex;
+	padding-top: 3px;
+}
+
 ul {
 	-webkit-mask-image: linear-gradient(
 		to bottom,
@@ -321,8 +328,8 @@ ul {
 li {
 	display: flex;
 	justify-content: start;
-	border-bottom: 0.1px solid var(--modal-list-border-color);
 	align-items: center;
+	border-bottom: 0.1px solid var(--modal-list-border-color);
 	padding: 12px 0;
 	border-radius: 8px;
 	font-size: 12px;
@@ -337,6 +344,8 @@ li:last-child {
 }
 
 .language-label {
+	/* display: flex; */
+	align-items: center;
 	width: 100%;
 	white-space: nowrap;
 	overflow: hidden;

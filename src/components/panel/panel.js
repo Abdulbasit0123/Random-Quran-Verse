@@ -52,6 +52,9 @@ export async function createPanel(surahIndex, ayahIndex) {
     const wrapper = createElement('div', 'content-wrapper');
     const quranEl = createElement('p', 'quran', quranAyahText);
     const tafseerEl = createElement('p', 'tafseer', tafseerAyahText);
+    if ((localStorage.getItem('isTafseerTurnedOff') === 'true')){
+        tafseerEl.classList.add('hide');
+    }
     tafseerEl.style = `direction: ${currentDirection};`;
     const sourceEl = createElement('a', 'source', `${surahName} - ${ayahIndex + 1}`);
     sourceEl.href = `https://tarteel.ai/ayah/${surahIndex + 1}/${ayahIndex + 1}`;

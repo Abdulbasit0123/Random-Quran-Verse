@@ -22,6 +22,9 @@ export function setupActionBtns() {
         document.body.classList.toggle('light');
         moonIcon.classList.toggle('hide');
         sunIcon.classList.toggle('hide');
+        // Persist theme choice
+        const theme = document.body.classList.contains('light') ? 'light' : 'dark';
+        localStorage.setItem('theme', theme);
     });
     fullscreenBtn.addEventListener('click', function () {
         if (!document.fullscreenElement) {
