@@ -9,11 +9,7 @@
   <title>Random Ayah Generator</title>
 </head>
 
-<body>
-  <script>
-    let theme = localStorage.getItem('theme');
-    document.body.classList.add(theme || 'dark');
-  </script>
+<body style="visibility: hidden;">
   <div class="action-buttons" title="double tap anywhere to show/hide">
     <!-- toggle full screen -->
     <button title="Full Screen Toggle" id="fullscreen-toggle">
@@ -183,10 +179,33 @@
 
     </div>
   </div>
+  <noscript>
+    <style>
+      body {
+        visibility: visible !important;
+      }
+    </style>
+  </noscript>
+  <script>
+    let theme = localStorage.getItem('theme');
+    document.body.classList.add(theme || 'dark');
+  </script>
 
   <script type="module" src="/src/main.js" defer></script>
   <!-- <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
   <script defer src="/_vercel/insights/script.js"></script> -->
 </body>
+<script>
+  let domReady = (cb) => {
+    if (document.readyState === 'interactive' || document.readyState === 'complete') {
+      cb();
+    } else {
+      document.addEventListener('DOMContentLoaded', cb);
+    }
+  };
+  domReady(() => {
+    document.body.style.visibility = 'visible';
+  });
+</script>
 
 </html>

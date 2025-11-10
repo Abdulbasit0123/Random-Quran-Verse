@@ -4,7 +4,7 @@ import { saveToIDB, loadFromIDB, clearIDBData } from './indexedDB_utils.js';
 import { hideTafseer, showTafseer } from './toggleTafseer.js';
 
 const CURRENT_CONTENT_VERSION = '1.0';
-let currentLanguage = (localStorage.getItem('currentLanguage') || 'ku.asan'); // this is the default tafseer language
+export let currentLanguage = (localStorage.getItem('currentLanguage') || 'ku.asan'); // this is the default tafseer language
 let isContentLoaded = false;
 let content = {};
 
