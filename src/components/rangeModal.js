@@ -9,116 +9,110 @@ let isListCreatedBefore = false;
 export let isRangeEnabled = false;
 export let startingSurahIndex, startingAyahIndex, endingSurahIndex, endingAyahIndex;
 
+function createSurahList(type, name, index) {
+    const li = document.createElement('li');
+    const label = document.createElement('label');
+    const input = document.createElement('input');
+    const span = document.createElement('span');
+    
+    label.classList.add('option-label');
+    span.classList.add('surah-number');
+
+    label.setAttribute('for', `${type}${index}`);
+    input.type = 'radio';
+    input.id = `${type}${index}`;
+    input.value = `${index}`;
+    input.name = `${type}`;
+
+    span.append(document.createTextNode(`${index}`));
+    label.append(input, span, document.createTextNode(`${name}`));
+    li.append(label);
+
+    return li;
+}
+
+function createAyahList(type, index) {
+
+    const li = document.createElement('li');
+    const label = document.createElement('label');
+    const input = document.createElement('input');
+
+    li.classList.add('option');
+    label.classList.add('option-label');
+    input.classList.add('option-input');
+
+    label.setAttribute('for', `${type}${index}`);
+    input.type = 'radio';
+    input.id = `${type}${index}`;
+    input.value = `${index}`;
+    input.name = `${type}`;
+
+    label.append(input, document.createTextNode(`${index}`));
+    li.append(label);
+
+    return li;
+}
+
+function moveCheckToFront() {
+    ['ss', 'sa', 'es', 'ea'].forEach((el) => {
+        document.querySelector(`input[name="${el}"]:checked`).scrollIntoView({ behavior: 'instant', block: 'center', container: 'nearest', inline: 'center' });
+    });
+}
+
 export function toggleRangeModal() {
     modalBackdrop.classList.remove('hide');
     rangeModal.classList.remove('hide');
     setAreEventsPaused(true);
 
-    if (isListCreatedBefore) return;
+    if (isListCreatedBefore) {
+        moveCheckToFront();
+        return;
+    }
     surahNames.forEach((name, i) => {
         let index = i + 1;
-        //ss stands for starting-surah
-        const ssOption = document.createElement('input');
-        const ssNumber = document.createElement('span');
-        const ssName = document.createElement('label');
-
-        ssOption.type = 'radio';
-        ssOption.id = `ss${index}`;
-        ssOption.value = `${index}`;
-        ssOption.name = 'ss';
-        ssOption.classList.add('modal-input');
-
-        ssNumber.classList.add('surah-number');
-        ssNumber.append(document.createTextNode(`${index}`));
-        ssName.classList.add('option');
-        ssName.setAttribute('for', `ss${index}`);
-        ssName.append(ssNumber, document.createTextNode(`${name}`));
-
-        startingSurahSelection.append(ssOption, ssName);
-
-        //   <input type="radio" id="es3" value="2" name="es">
-        //   <label for="startingSurah1" class="option"><span class="surah-number">3</span>آلِ عِمۡرَانَ</label>
-
-        const esOption = document.createElement('input');
-        const esNumber = document.createElement('span');
-        const esName = document.createElement('label');
-
-        esOption.type = 'radio';
-        esOption.id = `es${index}`;
-        esOption.value = `${index}`;
-        esOption.name = 'es';
-        esOption.classList.add('modal-input');
-
-        esNumber.classList.add('surah-number');
-        esNumber.append(document.createTextNode(`${index}`));
-        esName.classList.add('option');
-        esName.setAttribute('for', `es${index}`);
-        esName.append(esNumber, document.createTextNode(`${name}`));
-
-        endingSurahSelection.append(esOption, esName);
+        startingSurahSelection.append(createSurahList('ss', name, index)); //ss = starting-surah
+        endingSurahSelection.append(createSurahList('es', name, index)); //es = ending-surah
     });
     document.getElementById('ss1').checked = true;
     document.getElementById('es114').checked = true;
+
+    moveCheckToFront();
     isListCreatedBefore = true;
+}
+
+function cleanAyahList(el) {
+    while (el.firstChild) {
+        el.removeChild(el.firstChild);
+    }
 }
 
 startingSurahSelection.addEventListener('change', (e) => {
     if (e.target.name === 'ss') {
-        while (startingAyahSelection.firstChild) {
-            startingAyahSelection.removeChild(startingAyahSelection.firstChild);
-        }
+        cleanAyahList(startingAyahSelection);
         for (let i = 1; i <= surahLength[+e.target.value - 1]; i++) {
-
-            const saOption = document.createElement('input');
-            const saNumber = document.createElement('label');
-
-            saOption.type = 'radio';
-            saOption.id = `sa${i}`;
-            saOption.value = `${i}`;
-            saOption.name = 'sa';
-            saOption.classList.add('modal-input');
-
-            saNumber.classList.add('option');
-            saNumber.setAttribute('for', `sa${i}`);
-            saNumber.append(document.createTextNode(`${i}`));
-
-            startingAyahSelection.append(saOption, saNumber);
+            startingAyahSelection.append(createAyahList('sa', i)); // sa = starting-ayah
         }
         document.getElementById('sa1').checked = true;
+        moveCheckToFront();
     }
 });
 
 endingSurahSelection.addEventListener('change', (e) => {
     if (e.target.name === 'es') {
-        while (endingAyahSelection.firstChild) {
-            endingAyahSelection.removeChild(endingAyahSelection.firstChild);
-        }
+        cleanAyahList(endingAyahSelection);
         for (let i = 1; i <= surahLength[+e.target.value - 1]; i++) {
-
-            const eaOption = document.createElement('input');
-            const eaNumber = document.createElement('label');
-
-            eaOption.type = 'radio';
-            eaOption.id = `ea${i}`;
-            eaOption.value = `${i}`;
-            eaOption.name = 'ea';
-            eaOption.classList.add('modal-input');
-
-            eaNumber.classList.add('option');
-            eaNumber.setAttribute('for', `ea${i}`);
-            eaNumber.append(document.createTextNode(`${i}`));
-
-            endingAyahSelection.append(eaOption, eaNumber);
+            endingAyahSelection.append(createAyahList('ea', i));//ea = ending-ayah
         }
         document.getElementById('ea1').checked = true;
+        moveCheckToFront();
     }
 });
 
 ['click', 'blur'].forEach(eventType => {
-    startingSurahSelection.addEventListener(eventType, () => { document.querySelector('input[name="ss"]:checked').scrollIntoView({ behavior: 'instant', block: 'center', container: 'nearest', inline: 'center' }); });
-    startingAyahSelection.addEventListener(eventType, () => { document.querySelector('input[name="sa"]:checked').scrollIntoView({ behavior: 'instant', block: 'center', container: 'nearest', inline: 'center' }); });
-    endingSurahSelection.addEventListener(eventType, () => { document.querySelector('input[name="es"]:checked').scrollIntoView({ behavior: 'instant', block: 'center', container: 'nearest', inline: 'center' }); });
-    endingAyahSelection.addEventListener(eventType, () => { document.querySelector('input[name="ea"]:checked').scrollIntoView({ behavior: 'instant', block: 'center', container: 'nearest', inline: 'center' }); });
+    let shortNames = ['ss', 'sa', 'es', 'ea'];
+    [startingSurahSelection, startingAyahSelection, endingSurahSelection, endingAyahSelection].forEach((el, i) => {
+        el.addEventListener(eventType, () => { document.querySelector(`input[name="${shortNames[i]}"]:checked`).scrollIntoView({ behavior: 'instant', block: 'center', container: 'nearest', inline: 'center' }); });
+    });
 });
 
 disableRangeBtn.addEventListener('click', () => {
@@ -129,7 +123,7 @@ saveRangeBtn.addEventListener('click', () => {
 
     range.length = 0;
     usedRange.length = 0;
-    
+
     let ssi = Number(document.querySelector('input[name="ss"]:checked').value);
     let sai = Number(document.querySelector('input[name="sa"]:checked').value);
     let esi = Number(document.querySelector('input[name="es"]:checked').value);

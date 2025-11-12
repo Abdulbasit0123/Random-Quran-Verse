@@ -23,12 +23,12 @@ export function toggleLanguageModal() {
         const bold = document.createElement('b');
         const italic = document.createElement('i');
 
+        li.classList.add('language-list');
         input.type = 'radio';
         input.id = `${lang[0]}`;
         input.value = `${lang[0]}`;
         input.name = 'language';
         input.setAttribute('data-direction', `${lang[3]}`);
-        input.classList.add('language-input');
 
         bold.append(document.createTextNode(`${lang[1]}`));
         italic.append(document.createTextNode(` – ${lang[2]}`));
@@ -45,7 +45,6 @@ export function toggleLanguageModal() {
     document.getElementById(currentLanguage).scrollIntoView({ behavior: 'instant', block: 'center', container: 'nearest', inline: 'center' });
 }
 searchInput.addEventListener('input', (e) => {
-
     const searchTerm = e.target.value.toLowerCase();
     const items = languageList.querySelectorAll('li');
 
