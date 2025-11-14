@@ -34,7 +34,6 @@ export async function getContent(surahIndex, ayahIndex) {
     return { quranAyahText, tafseerAyahText, surahName };
 }
 
-
 // Check version from IndexedDB
 async function isDataValid() {
     const contentVersion = await loadFromIDB('CONTENT_VERSION');
@@ -49,6 +48,7 @@ worker.onmessage = async (event) => {
 
     if (status === 'error') {
         console.error('Worker error:', message);
+        hideLoading()
         return;
     }
 
@@ -60,6 +60,9 @@ worker.onmessage = async (event) => {
             await saveToIDB('CONTENT_VERSION', CURRENT_CONTENT_VERSION);
 
             isContentLoaded = true;
+            cleanCanvas();
+            panelMap.clear();
+            createPanel(currentSurahIndex, currentAyahIndex);
             hideLoading();
             break;
         case 'loadNewTafseer':

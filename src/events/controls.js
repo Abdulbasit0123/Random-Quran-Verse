@@ -1,4 +1,5 @@
 import { movePanelHorizontally, movePanelVertically } from '../components/panel/panel.js';
+import { viewport } from '../dom.js';
 
 export let areEventsPaused = false;
 export function setAreEventsPaused(value) { 
@@ -110,12 +111,14 @@ export function setupMouseControls() {
         }
         startX = e.clientX;
         startY = e.clientY;
+        viewport.classList.add('grabbing');
         window.addEventListener('mousemove', (e) => {
             window.getSelection().removeAllRanges();
             isClickedAndMovedOutside = true;
         }, { once: true });
     });
     window.addEventListener('mouseup', (e) => {
+        viewport.classList.remove('grabbing');
         if (areEventsPaused) return;
         if (!isClickedAndMovedOutside) return;
         const deltaX = e.clientX - startX;

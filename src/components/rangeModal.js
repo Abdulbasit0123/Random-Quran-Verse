@@ -1,8 +1,9 @@
 import { disableRangeBtn, modalBackdrop, rangeModal, saveRangeBtn } from '../dom';
 import { setAreEventsPaused } from '../events/controls';
 import { startingSurahSelection, startingAyahSelection, endingSurahSelection, endingAyahSelection } from '../dom';
-import { range, surahLength, usedRange } from './panel/panel';
+import { range, surahLength, usedRange, panelMap, createRandomPanelBetweenRange } from './panel/panel';
 import { hideModal } from '../utils/hideModal';
+import { cleanCanvas } from '../utils/cleanCanvas';
 
 let surahNames = ['ٱلْفَاتِحَةِ', 'البَقَرَةِ', 'آلِ عِمۡرَانَ', 'النِّسَاءِ', 'المَائـِدَةِ', 'الأَنۡعَامِ', 'الأَعۡرَافِ', 'الأَنفَالِ', 'التَّوۡبَةِ', 'يُونُسَ', 'هُودٍ', 'يُوسُفَ', 'الرَّعۡدِ', 'إِبۡرَاهِيمَ', 'الحِجۡرِ', 'النَّحۡلِ', 'الإِسۡرَاءِ', 'الكَهۡفِ', 'مَرۡيَمَ', 'طه', 'الأَنبِيَاءِ', 'الحَجِّ', 'المُؤۡمِنُونَ', 'النُّورِ', 'الفُرۡقَانِ', 'الشُّعَرَاءِ', 'النَّمۡلِ', 'القَصَصِ', 'العَنكَبُوتِ', 'الرُّومِ', 'لُقۡمَانَ', 'السَّجۡدَةِ', 'الأَحۡزَابِ', 'سَبَإٍ', 'فَاطِرٍ', 'يسٓ', 'الصَّافَّاتِ', 'صٓ', 'الزُّمَرِ', 'غَافِرٍ', 'فُصِّلَتۡ', 'الشُّورَىٰ', 'الزُّخۡرُفِ', 'الدُّخَانِ', 'الجَاثِيَةِ', 'الأَحۡقَافِ', 'مُحَمَّدٍ', 'الفَتۡحِ', 'الحُجُرَاتِ', 'قٓ', 'الذَّارِيَاتِ', 'الطُّورِ', 'النَّجۡمِ', 'القَمَرِ', 'الرَّحۡمَٰن', 'الوَاقِعَةِ', 'الحَدِيدِ', 'المُجَادلَةِ', 'الحَشۡرِ', 'المُمۡتَحنَةِ', 'الصَّفِّ', 'الجُمُعَةِ', 'المُنَافِقُونَ', 'التَّغَابُنِ', 'الطَّلَاقِ', 'التَّحۡرِيمِ', 'المُلۡكِ', 'القَلَمِ', 'الحَاقَّةِ', 'المَعَارِجِ', 'نُوحٍ', 'الجِنِّ', 'المُزَّمِّلِ', 'المُدَّثِّرِ', 'القِيَامَةِ', 'الإِنسَانِ', 'المُرۡسَلَاتِ', 'النَّبَإِ', 'النَّازِعَاتِ', 'عَبَسَ', 'التَّكۡوِيرِ', 'الانفِطَارِ', 'المُطَفِّفِينَ', 'الانشِقَاقِ', 'البُرُوجِ', 'الطَّارِقِ', 'الأَعۡلَىٰ', 'الغَاشِيَةِ', 'الفَجۡرِ', 'البَلَدِ', 'الشَّمۡسِ', 'اللَّيۡلِ', 'الضُّحَىٰ', 'الشَّرۡحِ', 'التِّينِ', 'العَلَقِ', 'القَدۡرِ', 'البَيِّنَةِ', 'الزَّلۡزَلَةِ', 'العَادِيَاتِ', 'القَارِعَةِ', 'التَّكَاثُرِ', 'العَصۡرِ', 'الهُمَزَةِ', 'الفِيلِ', 'قُرَيۡشٍ', 'المَاعُونِ', 'الكَوۡثَرِ', 'الكَافِرُونَ', 'النَّصۡرِ', 'المَسَدِ', 'الإِخۡلَاصِ', 'الفَلَقِ', 'النَّاسِ'];
 let isListCreatedBefore = false;
@@ -14,7 +15,7 @@ function createSurahList(type, name, index) {
     const label = document.createElement('label');
     const input = document.createElement('input');
     const span = document.createElement('span');
-    
+
     label.classList.add('option-label');
     span.classList.add('surah-number');
 
@@ -111,7 +112,7 @@ endingSurahSelection.addEventListener('change', (e) => {
 ['click', 'blur'].forEach(eventType => {
     let shortNames = ['ss', 'sa', 'es', 'ea'];
     [startingSurahSelection, startingAyahSelection, endingSurahSelection, endingAyahSelection].forEach((el, i) => {
-        el.addEventListener(eventType, () => { document.querySelector(`input[name="${shortNames[i]}"]:checked`).scrollIntoView({ behavior: 'instant', block: 'center', container: 'nearest', inline: 'center' }); });
+        el.addEventListener(eventType, () => { document.querySelector(`input[name="${shortNames[i]}"]:checked`).scrollIntoView({ behavior: 'smooth', block: 'center', container: 'nearest', inline: 'center' }); });
     });
 });
 
@@ -143,4 +144,7 @@ saveRangeBtn.addEventListener('click', () => {
 
     isRangeEnabled = true;
     hideModal();
+    cleanCanvas();
+    panelMap.clear();
+    createRandomPanelBetweenRange();
 });

@@ -8,27 +8,30 @@
 
 	--scroll-bar-color: #ccc;
 
-	--modal-background-color: #282b2d;
+	--modal-bg: #282b2d;
 	--modal-text-color: #d2e1e6;
 	--modal-list-border-color: #50595b;
 	--modal-list-color-hover: #363b3b;
 
-	--option-input-background-color: #383b3c;
+	--option-input-bg: #383b3c;
 	--option-input-border-color: #50595b;
 	--option-input-border-color-focus: #4c5353;
-	--option-input-background-color-focus: #282b2d;
-	--modal-button-background-color: #3e4344;
-	--modal-button-background-color-hover: #353a3c;
-	--modal-button-background-color-active: #232628;
+	--option-input-bg-focus: #282b2d;
+	--modal-button-bg: #3e4344;
+	--modal-button-bg-hover: #353a3c;
+	--modal-button-bg-active: #232628;
 
-	--radio-circle-background-color: #393939;
-	--radio-circle-background-color-checked: #0d1117;
+	--surah-number-color: #a2afb3;
 
-	--radio-circle-border-color: #6d6d6d;
-	--radio-circle-border-color-hover: #a1a1a1;
-	--radio-circle-border-color-checked: #d2e1e6;
+	--checked-bg: #5a6061;
+	--checked-border-color: #c4d1d6;
+}
 
-	--surah-number-color: #aaa;
+@font-face {
+	font-family: "UthmanicHafs";
+	src: url("./assets/font/Uthmanic-Hafs-Font.otf") format("opentype");
+	font-weight: normal;
+	font-style: normal;
 }
 
 /* --- Base & Dark Mode (default) --- */
@@ -39,23 +42,6 @@ body {
 	color: var(--my-white);
 	margin: 0;
 	padding: 0;
-}
-
-svg,
-path {
-	color: var(--icon-color);
-	fill: var(--icon-color);
-}
-
-.hide {
-	display: none !important;
-}
-
-@font-face {
-	font-family: "UthmanicHafs";
-	src: url("./assets/font/Uthmanic-Hafs-Font.otf") format("opentype");
-	font-weight: normal;
-	font-style: normal;
 }
 
 /* --- Light Mode Overrides --- */
@@ -69,27 +55,31 @@ body.light {
 
 	--scroll-bar-color: #a0a0a0;
 
-	--modal-background-color: #d2e1e6;
+	--modal-bg: #d2e1e6;
 	--modal-text-color: #0d1117;
 	--modal-list-border-color: #c0c9cf;
 	--modal-list-color-hover: #cad7dc;
 
-	--option-input-background-color: #d8e4e8;
+	--option-input-bg: #d8e4e8;
 	--option-input-border-color: #c0c9cf;
 	--option-input-border-color-focus: #809f9f;
-	--option-input-background-color-focus: #d2e1e6;
-	--modal-button-background-color: #dbecf2;
-	--modal-button-background-color-hover: #bfced3;
-	--modal-button-background-color-active: #a6afb5;
-
-	--radio-circle-background-color: #d2e1e6;
-	--radio-circle-background-color-checked: #0d1117;
-
-	--radio-circle-border-color: #a6b0b7;
-	--radio-circle-border-color-hover: #8c9297;
-	--radio-circle-border-color-checked: #9b9fa7;
-
+	--option-input-bg-focus: #d2e1e6;
+	--modal-button-bg: #dbecf2;
+	--modal-button-bg-hover: #bfced3;
+	--modal-button-bg-active: #a6afb5;
+	--checked-bg: #bfced3;
+	--checked-border-color: #4d585c;
 	--surah-number-color: #777;
+}
+
+svg,
+path {
+	color: var(--icon-color);
+	fill: var(--icon-color);
+}
+
+.hide {
+	display: none !important;
 }
 
 /* --- Layout: Viewport, Canvas, Panel --- */
@@ -98,7 +88,13 @@ body.light {
 	height: 100dvh;
 	overflow: hidden;
 	position: relative;
+	cursor: grab;
 }
+
+.grabbing {
+	cursor: grabbing;
+}
+
 .canvas {
 	position: absolute;
 	top: 0;
@@ -126,6 +122,7 @@ body.light {
 	align-items: center;
 	justify-content: flex-start;
 	text-align: center;
+	cursor: text;
 
 	-webkit-mask-image: linear-gradient(
 		to bottom,
@@ -264,7 +261,7 @@ body .action-buttons button:active {
 	padding: 25px;
 	padding-top: 10px;
 	color: var(--modal-text-color);
-	background-color: var(--modal-background-color);
+	background-color: var(--modal-bg);
 	border-radius: 16px;
 	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 	box-sizing: border-box;
@@ -302,18 +299,18 @@ header {
 /* --- Modal Content: Search, Language List, Selection Input --- */
 #search-input {
 	width: 100%;
-	padding: 10px 15px;
+	padding: 20px 15px;
 	margin-bottom: 10px;
 	border: 1px solid var(--option-input-border-color);
 	border-radius: 8px;
 	box-sizing: border-box;
 	font-size: 1em;
-	background-color: var(--option-input-background-color);
+	background-color: var(--option-input-bg);
 	color: var(--modal-text-color);
 }
 #search-input:focus {
 	border-color: var(--option-input-border-color-focus);
-	background-color: var(--option-input-background-color-focus);
+	background-color: var(--option-input-bg-focus);
 	outline: none;
 }
 
@@ -361,7 +358,8 @@ header {
 	align-items: center;
 	border-bottom: 0.1px solid var(--modal-list-border-color);
 	padding: 12px 0;
-	border-radius: 8px;
+	padding-left: 12px;
+	border-radius: 3px;
 	font-size: 12px;
 }
 
@@ -372,6 +370,16 @@ header {
 .language-list:last-child {
 	border-bottom: none; /* No line under the last item */
 }
+
+/* expirement */
+.language-list:has(input:checked),
+.dropdown-list:focus .option-label:has(input:checked) {
+	border-left: 4px solid var(--checked-border-color);
+	border-radius: 0px 5px 5px 0px;
+	font-weight: bold;
+	background-color: var(--checked-bg);
+}
+/* end of expiremnt */
 
 .language-label {
 	/* display: flex; */
@@ -411,16 +419,17 @@ header {
 	top: 0;
 	z-index: 1;
 	display: flex;
-	justify-content: start;
+	justify-content: center;
 	align-items: center;
 	box-sizing: border-box;
 	pointer-events: none;
 	font-size: 1.4rem;
-	background-color: var(--modal-button-background-color);
+	background-color: var(--modal-button-bg);
+	border-bottom: 0.1px solid var(--modal-list-border-color);
 }
 
 .option-label:hover {
-	background: var(--modal-list-color-hover);
+	background-color: var(--modal-list-color-hover);
 }
 
 .dropdown-list:focus .option-label {
@@ -428,34 +437,13 @@ header {
 	pointer-events: all;
 }
 
-/* --- Radio Button Styling (General Input) --- */
+/* --- Radio Button Styling --- */
 input {
 	appearance: none;
 	-webkit-appearance: none;
-	width: 16px;
-	height: 16px;
-	border: 2px solid var(--radio-circle-border-color);
-	border-radius: 50%;
-	outline: none;
-	cursor: pointer;
-	vertical-align: middle;
-	margin-right: 6px;
-	background-color: var(--radio-circle-background-color);
-	transition: border 0.1s;
-}
-input:hover {
-	border-color: var(--radio-circle-border-color-hover);
-}
-input:checked {
-	background-color: var(--radio-circle-background-color-checked);
-	border: 4.5px solid var(--radio-circle-border-color-checked);
-}
-
-.dropdown-list .option-label input:checked {
-	visibility: hidden;
-}
-.dropdown-list:focus .option-label input:checked {
-	visibility: visible;
+	width: 0px;
+	height: 0px;
+	margin: -1px;
 }
 
 /* --- Modal Content Layout (Grid) --- */
@@ -490,7 +478,8 @@ input:checked {
 }
 
 .surah-number {
-	margin-right: 0.7em;
+	position: absolute;
+	left: 12px;
 	color: var(--surah-number-color);
 }
 
@@ -504,7 +493,7 @@ input:checked {
 
 .modal-button {
 	padding: 4px;
-	background-color: var(--modal-button-background-color);
+	background-color: var(--modal-button-bg);
 	border: none;
 	border-radius: 8px;
 	cursor: pointer;
@@ -517,10 +506,10 @@ input:checked {
 }
 
 .modal-button:hover {
-	background-color: var(--modal-button-background-color-hover);
+	background-color: var(--modal-button-bg-hover);
 }
 .modal-button:active {
-	background-color: var(--modal-button-background-color-active);
+	background-color: var(--modal-button-bg-active);
 }
 
 #save-language {

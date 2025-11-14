@@ -70,10 +70,6 @@ export function createRandomPanel() {
     createPanel(surahIndex, ayahIndex);
 }
 
-// function getRandomNumberBetween(min, max) {
-//     return Math.floor(Math.random() * (max - min + 1)) + min;
-// }
-
 function generateTheRange() {
     if (startingSurahIndex === endingSurahIndex) {//if they are the same surah
         for (let i = startingAyahIndex; i <= endingAyahIndex; i++) {

@@ -20,7 +20,7 @@ export function toggleLanguageModal() {
         const li = document.createElement('li');
         const input = document.createElement('input');
         const label = document.createElement('label');
-        const bold = document.createElement('b');
+        const span = document.createElement('span');
         const italic = document.createElement('i');
 
         li.classList.add('language-list');
@@ -30,12 +30,12 @@ export function toggleLanguageModal() {
         input.name = 'language';
         input.setAttribute('data-direction', `${lang[3]}`);
 
-        bold.append(document.createTextNode(`${lang[1]}`));
+        span.append(document.createTextNode(`${lang[1]}`));
         italic.append(document.createTextNode(` – ${lang[2]}`));
 
         label.setAttribute('for', `${lang[0]}`);
         label.classList.add('language-label');
-        label.append(bold, italic);
+        label.append(span, italic);
 
         li.append(input, label);
         languageList.append(li);
