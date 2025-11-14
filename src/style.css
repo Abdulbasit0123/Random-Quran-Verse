@@ -88,7 +88,6 @@ path {
 	height: 100dvh;
 	overflow: hidden;
 	position: relative;
-	cursor: grab;
 }
 
 .grabbing {
