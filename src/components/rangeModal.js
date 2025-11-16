@@ -104,7 +104,8 @@ endingSurahSelection.addEventListener('change', (e) => {
         for (let i = 1; i <= surahLength[+e.target.value - 1]; i++) {
             endingAyahSelection.append(createAyahList('ea', i));//ea = ending-ayah
         }
-        document.getElementById('ea1').checked = true;
+        console.log(surahLength[+e.target.value - 1]);
+        document.getElementById(`ea${surahLength[+e.target.value - 1]}`).checked = true;
         moveCheckToFront();
     }
 });

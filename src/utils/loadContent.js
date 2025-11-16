@@ -1,11 +1,11 @@
 import { createPanel, currentAyahIndex, currentSurahIndex, panelMap } from '../components/panel/panel.js';
 import { cleanCanvas } from './cleanCanvas.js';
 import { saveToIDB, loadFromIDB, clearIDBData } from './indexedDB_utils.js';
-import { hideLoading, showLoading } from './loadingIcon.js';
+import { showLoading, showSuccess, showError } from './loadingIcon.js';
 import { hideTafseer, showTafseer } from './toggleTafseer.js';
 
 const CURRENT_CONTENT_VERSION = '1.0';
-export let currentLanguage = (localStorage.getItem('currentLanguage') || 'ku.asan'); // this is the default tafseer language
+export let currentLanguage = (localStorage.getItem('currentLanguage') || 'en.sahih'); // this is the default tafseer language
 let isContentLoaded = false;
 let content = {};
 
@@ -26,6 +26,7 @@ export async function getContent(surahIndex, ayahIndex) {
             tafseerAyahText = data.data[1].text;
             surahName = data.data[0].surah.name;
         } catch (error) {
+            showError();
             throw error;
         }
     }
@@ -48,7 +49,7 @@ worker.onmessage = async (event) => {
 
     if (status === 'error') {
         console.error('Worker error:', message);
-        hideLoading()
+        showError()
         return;
     }
 
@@ -63,13 +64,13 @@ worker.onmessage = async (event) => {
             cleanCanvas();
             panelMap.clear();
             createPanel(currentSurahIndex, currentAyahIndex);
-            hideLoading();
+            showSuccess()
             break;
         case 'loadNewTafseer':
             content.tafseer = tafseer;
             await saveToIDB(currentLanguage, tafseer);
 
-            hideLoading();
+            showSuccess();
             showTafseer();
             cleanCanvas();
             panelMap.clear();
@@ -108,9 +109,11 @@ export async function updateLanguage(newLanguageId) {
 
     if (newLanguageId === 'none') {
         hideTafseer();
+        localStorage.setItem('isNoneChecked', 'true');
         return;
     }
     if (newLanguageId !== 'none') {
+        localStorage.setItem('isNoneChecked', 'false');
         localStorage.setItem('currentLanguage', newLanguageId);
         showTafseer();
     }

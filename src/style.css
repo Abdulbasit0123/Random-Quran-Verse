@@ -1,5 +1,5 @@
 :root {
-	/* Default/Dark Theme Colors (used when body.light is not present) */
+	/* Default Dark Theme Colors (used when body.light is not present) */
 	--btn-hover-bg: #474747;
 	--btn-active-bg: #252525;
 	/* --my-dark: #0d1117; */
@@ -52,9 +52,7 @@ body.light {
 	/* Light Theme Overrides */
 	--btn-hover-bg: #def1f8;
 	--btn-active-bg: #c2d1d5;
-
 	--scroll-bar-color: #a0a0a0;
-
 	--modal-bg: #d2e1e6;
 	--modal-text-color: #0d1117;
 	--modal-list-border-color: #c0c9cf;
@@ -225,7 +223,7 @@ body .action-buttons button:active {
 .warning-edge {
 	position: fixed;
 	top: 0;
-	width: 0px; /* Start at 0px */
+	width: 0px;
 	height: 100vh;
 	background-color: rgb(255, 100, 100);
 }
@@ -236,7 +234,6 @@ body .action-buttons button:active {
 	left: 0;
 }
 
-/* --- Modal Base --- */
 /* Modal Backdrop (The dark overlay)*/
 .modal-backdrop {
 	position: fixed;
@@ -289,16 +286,11 @@ body .action-buttons button:active {
 	background-color: var(--btn-active-bg);
 }
 
-header {
-	width: 46px;
-	margin: auto;
-	padding: 5px;
-}
-
-/* --- Modal Content: Search, Language List, Selection Input --- */
+/* --- Language Modal Search Input --- */
 #search-input {
 	width: 100%;
 	padding: 20px 15px;
+	margin-top: 1.5rem;
 	margin-bottom: 10px;
 	border: 1px solid var(--option-input-border-color);
 	border-radius: 8px;
@@ -321,7 +313,6 @@ header {
 	max-height: 175px;
 	overflow-y: auto;
 	margin: 15px 0;
-	/* Custom scrollbar */
 	scrollbar-color: var(--scroll-bar-color) transparent;
 	scrollbar-width: thin;
 }
@@ -367,10 +358,10 @@ header {
 }
 
 .language-list:last-child {
-	border-bottom: none; /* No line under the last item */
+	border-bottom: none;
 }
 
-/* expirement */
+/* checked input style */
 .language-list:has(input:checked),
 .dropdown-list:focus .option-label:has(input:checked) {
 	border-left: 4px solid var(--checked-border-color);
@@ -378,10 +369,8 @@ header {
 	font-weight: bold;
 	background-color: var(--checked-bg);
 }
-/* end of expiremnt */
 
 .language-label {
-	/* display: flex; */
 	align-items: center;
 	width: 100%;
 	white-space: nowrap;
@@ -390,7 +379,7 @@ header {
 	cursor: pointer;
 }
 
-/* Selection Input (Dropdown/Options List) */
+/* Dropdown List style */
 .dropdown-list {
 	list-style: none;
 	padding: 0;
@@ -445,12 +434,13 @@ input {
 	margin: -1px;
 }
 
-/* --- Modal Content Layout (Grid) --- */
+/* --- Range Modal Content Layout --- */
 .modal-content {
 	display: grid;
-	grid-template-columns: auto 5% auto;
+	grid-template-columns: 1fr;
 	width: 100%;
 	align-items: center;
+	margin-top: 1.5rem;
 	margin-bottom: 1.5rem;
 }
 
@@ -458,6 +448,8 @@ input {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	margin: 0.25rem;
+	transform: rotate(90deg);
 }
 
 .arrow-between svg {
@@ -478,11 +470,11 @@ input {
 
 .surah-number {
 	position: absolute;
-	left: 12px;
+	left: clamp(0px, 12%, 100px);
 	color: var(--surah-number-color);
 }
 
-/* --- Modal Footer & Buttons --- */
+/* --- Range Modal Footer & Buttons --- */
 .modal-footer {
 	display: grid;
 	grid-template-columns: 50% 50%;
@@ -513,16 +505,6 @@ input {
 
 #save-language {
 	width: 100%;
-}
-
-/* --- Media Queries --- */
-@media (max-width: 570px) {
-	.modal-content {
-		grid-template-columns: 1fr;
-	}
-	.arrow-between svg {
-		transform: rotate(90deg);
-	}
 }
 
 @media (max-width: 400px) {

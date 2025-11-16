@@ -1,3 +1,5 @@
+import { showError } from './loadingIcon';
+
 const DB_NAME = 'contentDB';
 const DB_VERSION = 1;
 const STORE_NAME = 'contentStore';
@@ -57,6 +59,7 @@ export async function loadFromIDB(key) {
 
         return result || null; // Return null if undefined/not found
     } catch (error) {
+        showError();
         console.error("Failed to load from IDB:", error);
         return null;
     }
@@ -77,6 +80,7 @@ export async function clearIDBData() {
         console.log('IDB cleared.');
 
     } catch (error) {
+        showError();
         console.error("Failed to clear IDB data:", error);
     }
 }

@@ -18,6 +18,7 @@ export const minimizeIcon = document.getElementById('minimize');
 
 export const spinIcon = document.getElementById('spin');
 export const storedIcon = document.getElementById('stored');
+export const errorIcon = document.getElementById('error');
 
 export const closeModal = document.querySelector('#close-modal');
 export const modalBackdrop = document.querySelector('.modal-backdrop');
