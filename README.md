@@ -43,7 +43,7 @@ Here is a [Live Demo.](https://random-quran-verse-wheat.vercel.app/)
 | **Previous/Next**      | Click & Drag / Arrow Right & Left                   | Horizontal Swipe                    |
 | **Show/Hide Controls** | Double Click Outside The Content Area               | Double Tap Outside The Content Area |
 
-**Attention:**  
+**Quick note:**  
 The app may feel slow or laggy the very first time you open it 😬 This is because it fetches the entire Quran from the API up front. It may take a little longer than you expected, please be patient and wait until the loading icon disappears, once everything is loaded, your experience will be smooth!
 
 ---
