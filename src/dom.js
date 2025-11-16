@@ -6,6 +6,7 @@ export const fullscreenBtn = document.getElementById('fullscreen-toggle');
 export const themeBtn = document.getElementById('theme');
 export const rangeBtn = document.getElementById('range');
 export const languageBtn = document.getElementById('language');
+export const githubBtn = document.getElementById('github');
 
 export const languageModal = document.getElementById('language-modal');
 export const rangeModal = document.getElementById('range-modal');
