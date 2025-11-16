@@ -9,13 +9,21 @@ Here is a [Live Demo.](https://random-quran-verse-wheat.vercel.app/)
 
 ---
 
+### Disclaimer!
+
+-   This application is designed for exploration and inspiration only. It is not for making decisions, seeking omens, fortune-telling or any form of divination.
+-   Reel-style presentation may show verses out of context, so this app should not replace traditional, sequential Qur’an reading. For proper understanding, always refer to full passages and authentic sources, using established methods of reading and study.
+
+---
+
 ### Core Experience
 
 -   **Random Verse Generation**: Scroll vertically to generate random Quran verses
 -   **Swipe Navigation**: Swipe horizontally (or use arrow keys) to navigate between previous and next verses
--   **Range Selection**: Specify a custom range of surahs and ayahs to explore
+-   **Range Selection**: Specify a custom range of Chapters and Verses to explore or to strengthen your memorization
 -   **Multi-Language Support**: Choose from various translation languages
 -   **Smooth Animations**: Beautiful transitions and animations for a seamless experience
+-   **Quick Jump**: On mobile, if you have the [Tarteel](https://www.tarteel.ai/) app installed, clicking the Surah name and verse number will take you directly to that verse in the app. This feature is provided solely for convenience and is not sponsored or endorsed by Tarteel.
 
 ### User Experience & Control
 
@@ -40,23 +48,16 @@ The app may feel slow or laggy the very first time you open it 😬 This is beca
 
 ---
 
-### Disclaimer!
-
--   This application is designed purely for exploration and inspiration. It is not for making decisions, seeking omens, fortune-telling or any form of divination.
--   Reel-style presentation may show verses out of context, so this app should not replace traditional, sequential Qur’an reading or study. For proper understanding always refer to full passages, authentic sources and traditional reading methods for comprehensive study and guidance.
-
----
-
 ## Tech Stack
 
-The project is built entirely with **pure vanilla JavaScript** to showcase fundamental web development skills, avoiding external frameworks or complex dependencies.
+The project is part of my learning journey and is built entirely with pure vanilla JavaScript to showcase fundamental web development skills, without relying on external frameworks or complex dependencies.
 
--   **Vanilla JavaScript (ES6+):** Modern JavaScript with modules, `async/await`, and more.
--   **External API:** Al Quran Cloud (for content)
+-   **Vanilla JavaScript (ES6+):** Modern JavaScript with modules, `async/await`, `fetch` and more.
+-   **External API:** Al Quran Cloud (for content).
 -   **Vite:** Used solely as a fast development server and build tool.
 -   **IndexedDB:** Client-side database for content caching.
--   **CSS3**: Custom styling with animations and transitions
--   **Web APIs**: Fullscreen API, Touch/mouse Events, Keyboard Events, and more
+-   **CSS3**: Custom styling with animations and transitions.
+-   **Web APIs**: Web Workers, Touch/mouse Events, Keyboard Events, localStorage and more.
 
 ---
 
@@ -146,7 +147,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ### Contact
 
 Feel free to reach out if you have any questions, suggestions, or just want to connect!
-
----
-
-**Note**: This project represents my journey in learning vanilla JavaScript. It's built without any frameworks to showcase fundamental web development skills and understanding of core JavaScript concepts. I hope it inspires others! 🚀
