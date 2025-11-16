@@ -1,7 +1,7 @@
 import { disableRangeBtn, modalBackdrop, rangeModal, saveRangeBtn } from '../dom';
 import { setAreEventsPaused } from '../events/controls';
 import { startingSurahSelection, startingAyahSelection, endingSurahSelection, endingAyahSelection } from '../dom';
-import { range, surahLength, usedRange, panelMap, createRandomPanelBetweenRange } from './panel/panel';
+import { range, surahLength, usedRange, panelMap, createRandomPanelBetweenRange, updateCurrentState } from './panel/panel';
 import { hideModal } from '../utils/hideModal';
 import { cleanCanvas } from '../utils/cleanCanvas';
 
@@ -147,4 +147,5 @@ saveRangeBtn.addEventListener('click', () => {
     cleanCanvas();
     panelMap.clear();
     createRandomPanelBetweenRange();
+    updateCurrentState();
 });
