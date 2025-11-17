@@ -10,9 +10,9 @@ Here is a [Live Demo.](https://random-quran-verse-wheat.vercel.app/)
 ---
 ### Screenshots
 
-|                                   |                                   |                            |                                   |                                   |
+                |                                   |                            |                                   |                                   |
 | :-------------------------------: | :-------------------------------: | :------------------------: | --------------------------------- | --------------------------------- |
-| https://github.com/user-attachments/assets/c9364904-9e09-41d5-bf31-a50efd2c7fa7 | ![](screenshots/1.png) | ![](screenshots/2.png) | ![](screenshots/3.png) | ![](screenshots/4.png) |
+| https://github.com/user-attachments/assets/e4e1eada-e88f-41b5-8159-5ed7b5473ab8 | ![](screenshots/1.png) | ![](screenshots/2.png) | ![](screenshots/3.png) | ![](screenshots/4.png) |
 
 ---
 
