@@ -9,6 +9,12 @@ Here is a [Live Demo.](https://random-quran-verse-wheat.vercel.app/)
 
 ---
 
+|                                   |                                   |                            |                                   |                                   |
+| :-------------------------------: | :-------------------------------: | :------------------------: | --------------------------------- | --------------------------------- |
+| ![](screenshots/0.gif) | ![](screenshots/1.png) | ![](screenshots/2.png) | ![](screenshots/3.png) | ![](screenshots/4.png) |
+
+---
+
 ### Disclaimer!
 
 -   This application is designed for exploration and inspiration only. It is not for making decisions, seeking omens, fortune-telling or any form of divination.
