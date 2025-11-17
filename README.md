@@ -12,7 +12,7 @@ Here is a [Live Demo.](https://random-quran-verse-wheat.vercel.app/)
 
 |                                   |                                   |                            |                                   |                                   |
 | :-------------------------------: | :-------------------------------: | :------------------------: | --------------------------------- | --------------------------------- |
-| ![](screenshots/0.gif) | ![](screenshots/1.png) | ![](screenshots/2.png) | ![](screenshots/3.png) | ![](screenshots/4.png) |
+| <video src="screenshots/0.mp4" controls width="100%"></video> | ![](screenshots/1.png) | ![](screenshots/2.png) | ![](screenshots/3.png) | ![](screenshots/4.png) |
 
 ---
 
