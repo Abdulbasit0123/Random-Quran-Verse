@@ -1,6 +1,6 @@
 # 📖 Random Quran Verse: A Reel-Style Explorer
 
-A web application for exploring the Holy Quran, featuring an intuitive, reel style interface with with smooth animations and intuitive navigation.  
+A web application for exploring the Holy Quran, featuring a reel style interface with with smooth animations and intuitive navigation.  
 Here is a [Live Demo.](https://random-quran-verse-wheat.vercel.app/)
 
 ![Random Quran Verse](https://img.shields.io/badge/Status-Active-success)
@@ -56,7 +56,6 @@ The project is part of my learning journey and is built entirely with pure vanil
 -   **External API:** Al Quran Cloud (for content).
 -   **Vite:** Used solely as a fast development server and build tool.
 -   **IndexedDB:** Client-side database for content caching.
--   **CSS3**: Custom styling with animations and transitions.
 -   **Web APIs**: Web Workers, Touch/mouse Events, Keyboard Events, localStorage and more.
 
 ---
