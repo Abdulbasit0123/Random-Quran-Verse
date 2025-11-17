@@ -1,6 +1,6 @@
 # 📖 Random Quran Verse: A Reel-Style Explorer
 
-A web application for exploring the Holy Quran, featuring a reel style interface with with smooth animations and intuitive navigation.  
+A web application for exploring the Holy Quran, featuring a reel style interface with smooth animations and intuitive navigation.  
 Here is a [Live Demo.](https://random-quran-verse-wheat.vercel.app/)
 
 ![Random Quran Verse](https://img.shields.io/badge/Status-Active-success)
@@ -8,6 +8,7 @@ Here is a [Live Demo.](https://random-quran-verse-wheat.vercel.app/)
 ![License](https://img.shields.io/badge/License-MIT-blue)
 
 ---
+### Screenshots
 
 |                                   |                                   |                            |                                   |                                   |
 | :-------------------------------: | :-------------------------------: | :------------------------: | --------------------------------- | --------------------------------- |
