@@ -188,18 +188,29 @@ path {
 	justify-content: center;
 }
 
-body .action-buttons button:hover {
+body .action-buttons button:hover, .audio-control:hover {
 	background: var(--btn-hover-bg);
 }
 
-body .action-buttons button:active {
+body .action-buttons button:active, .audio-control:active {
 	background: var(--btn-active-bg);
+}
+
+.audio-control {
+	border-radius: 100%;
+	position: fixed;
+	bottom: 35px;
+	right: 30px;
+	padding: 8px;
+	z-index: 2;
+	width: 46px;
+	height: 46px;
 }
 
 .loading {
 	position: fixed;
-	bottom: 5px;
-	right: 5px;
+	top: 5px;
+	left: 5px;
 	padding: 8px;
 	z-index: 2;
 	width: 26px;

@@ -94,6 +94,14 @@ startingSurahSelection.addEventListener('change', (e) => {
             startingAyahSelection.append(createAyahList('sa', i)); // sa = starting-ayah
         }
         document.getElementById('sa1').checked = true;
+        
+        cleanAyahList(endingAyahSelection);
+        for (let i = 1; i <= surahLength[+e.target.value - 1]; i++) {
+            endingAyahSelection.append(createAyahList('ea', i));//ea = ending-ayah
+        }
+        document.getElementById(`ea${surahLength[+e.target.value - 1]}`).checked = true;
+        document.getElementById(`es${e.target.value}`).checked = true;
+        document.getElementById(`ea${surahLength[+e.target.value - 1]}`).checked = true;
         moveCheckToFront();
     }
 });
@@ -104,7 +112,6 @@ endingSurahSelection.addEventListener('change', (e) => {
         for (let i = 1; i <= surahLength[+e.target.value - 1]; i++) {
             endingAyahSelection.append(createAyahList('ea', i));//ea = ending-ayah
         }
-        console.log(surahLength[+e.target.value - 1]);
         document.getElementById(`ea${surahLength[+e.target.value - 1]}`).checked = true;
         moveCheckToFront();
     }

@@ -16,6 +16,10 @@ export const sunIcon = document.getElementById('sun');
 export const expandIcon = document.getElementById('expand');
 export const minimizeIcon = document.getElementById('minimize');
 
+export const audioEl = document.getElementById('audio');
+export const playBtn = document.getElementById('play');
+export const pauseBtn = document.getElementById('pause');
+
 export const spinIcon = document.getElementById('spin');
 export const storedIcon = document.getElementById('stored');
 export const errorIcon = document.getElementById('error');
