@@ -23,7 +23,7 @@ export function toggleLanguageModal() {
         const span = document.createElement('span');
         const italic = document.createElement('i');
 
-        li.classList.add('language-list');
+        li.classList.add('list-item');
         input.type = 'radio';
         input.id = `${lang[0]}`;
         input.value = `${lang[0]}`;
@@ -34,7 +34,7 @@ export function toggleLanguageModal() {
         italic.append(document.createTextNode(` – ${lang[2]}`));
 
         label.setAttribute('for', `${lang[0]}`);
-        label.classList.add('language-label');
+        label.classList.add('item-label');
         label.append(span, italic);
 
         li.append(input, label);

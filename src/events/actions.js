@@ -1,9 +1,10 @@
 import { toggleLanguageModal } from '../components/languageModal.js';
 import { toggleRangeModal } from '../components/rangeModal.js';
-import { viewport, modalBackdrop, actionButtons, themeBtn, fullscreenBtn, rangeBtn, languageBtn, moonIcon, sunIcon, expandIcon, minimizeIcon, closeModal, githubBtn, playBtn, pauseBtn, audioEl, } from '../dom.js';
+import { viewport, modalBackdrop, actionButtons, themeBtn, fullscreenBtn, rangeBtn, languageBtn, moonIcon, sunIcon, expandIcon, minimizeIcon, closeModal, githubBtn, playBtn, pauseBtn, audioEl, reciterBtn, } from '../dom.js';
 import { hideModal } from '../utils/hideModal.js';
 import { playAudio } from '../components/audio.js';
 import { pauseAudio } from '../components/audio.js';
+import { toggleReciterModal } from '../components/reciterModal.js';
 
 export let isOnAutoplay = false;
 
@@ -41,6 +42,7 @@ export function setupActionBtns() {
     });
     rangeBtn.addEventListener('click', toggleRangeModal);
     languageBtn.addEventListener('click', toggleLanguageModal);
+    reciterBtn.addEventListener('click', toggleReciterModal);
     githubBtn.addEventListener('click', () => {
         window.open('https://github.com/Abdulbasit0123/Random-Quran-Verse', '_blank');
     });
