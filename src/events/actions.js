@@ -20,10 +20,12 @@ export function setupActionBtns() {
         window.getSelection().removeAllRanges();
         if (actionButtons.classList.contains('hide')) {
             actionButtons.classList.remove('hide');
+            document.querySelector('.player-container').classList.remove('hide');
             setTimeout(() => {
                 actionButtons.classList.add('hide');
             }, 7000);
         } else {
+            document.querySelector('.player-container').classList.add('hide');
             actionButtons.classList.add('hide');
         }
     });
