@@ -76,10 +76,6 @@ path {
 	fill: var(--icon-color);
 }
 
-.hide {
-	display: none !important;
-}
-
 /* --- Layout: Viewport, Canvas, Panel --- */
 .viewport {
 	width: 100vw;
@@ -188,11 +184,13 @@ path {
 	justify-content: center;
 }
 
-body .action-buttons button:hover, .audio-control:hover {
+body .action-buttons button:hover,
+.audio-control:hover {
 	background: var(--btn-hover-bg);
 }
 
-body .action-buttons button:active, .audio-control:active {
+body .action-buttons button:active,
+.audio-control:active {
 	background: var(--btn-active-bg);
 }
 
@@ -514,16 +512,200 @@ input {
 	background-color: var(--modal-button-bg-active);
 }
 
-#save-language, #save-reciter {
+#save-language,
+#save-reciter {
 	width: 100%;
 }
 
 @media (max-width: 400px) {
 	.modal-footer {
 		grid-template-columns: 1fr;
-		gap: 4px; /* smaller gap when stacked */
+		gap: 4px;
 	}
 	.modal-button {
 		margin-top: 2px;
 	}
+}
+
+/* Experimental Player */
+/* Shared / Utilities */
+
+.glass-background {
+	background: rgba(255, 255, 255, 0.1);
+	backdrop-filter: blur(10px);
+	border: 2px solid rgba(255, 255, 255, 0.1);
+	color: var(--my-white);
+}
+
+/*Player Container */
+
+.player-container {
+	position: fixed;
+	bottom: 30px;
+	inset-inline: 0;
+	margin: auto;
+
+	width: 95%;
+	max-width: 350px;
+
+	display: grid;
+	grid-template-columns: auto 55px;
+	gap: 30px;
+	align-items: center;
+
+	/* overflow-x: auto; */
+	scrollbar-width: none;
+	-ms-overflow-style: none;
+}
+
+.player-container::-webkit-scrollbar {
+	display: none; /* Chrome / Safari */
+}
+
+.player-container .icon-btn svg {
+	width: 18px;
+}
+
+/*Play Button */
+
+.play-section {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	height: 55px;
+	width: 55px;
+	border-radius: 50%;
+	cursor: pointer;
+
+	background: rgba(255, 255, 255, 0.1);
+	backdrop-filter: blur(10px);
+	border: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.play-section svg {
+	width: clamp(60%, 50%, 75%);
+}
+
+/*Audio Player */
+
+.audio-player {
+	width: 95%;
+	display: grid;
+	grid-template-rows: 1fr 1fr;
+	padding: 3px 15px;
+	border-radius: 300px;
+}
+
+/*Timeline Row */
+
+.timeline-row {
+	width: 100%;
+	display: grid;
+	grid-template-columns: 0.18fr auto 0.18fr;
+	gap: 5px;
+	align-items: center;
+	justify-items: center;
+	font-family: monospace;
+	color: var(--modal-text-color);
+	font-weight: bold;
+}
+
+/*Custom Progress Slider */
+.progress-bar {
+	position: relative;
+	width: 100%;
+	height: 5px;
+	border-radius: 3px;
+	background-color: var(--checked-bg);
+	cursor: pointer;
+}
+
+.progress {
+	position: relative;
+	width: 0%;
+	height: 100%;
+	border-radius: 3px;
+	background-color: var(--modal-text-color);
+	transition: width 0.1s linear;
+}
+
+.progress-handle {
+	position: absolute;
+	top: 50%;
+	right: -7px;
+	width: 14px;
+	height: 14px;
+	border-radius: 50%;
+	background-color: #dedede;
+	box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+	opacity: 0;
+	transform: translateY(-50%) scale(0);
+	transition:
+		opacity 0.2s ease,
+		transform 0.2s ease;
+}
+
+.progress-bar:hover .progress-handle {
+	opacity: 1;
+	transform: translateY(-50%) scale(1);
+}
+
+/* Audio Controls */
+.audio-controls {
+	display: grid;
+	grid-template-columns: auto 1fr auto 1fr auto 1fr auto;
+	align-items: center;
+
+	overflow-x: auto;
+	overflow-y: hidden;
+	white-space: nowrap;
+	scrollbar-width: none;
+	-ms-overflow-style: none;
+
+	/* mask-image: linear-gradient(
+		to right,
+		transparent,
+		var(--modal-text-color) 18px,
+		var(--modal-text-color) calc(100% - 18px),
+		transparent
+	);
+	-webkit-mask-image: linear-gradient(
+		to right,
+		transparent,
+		var(--modal-text-color) 18px,
+		var(--modal-text-color) calc(100% - 18px),
+		transparent
+	); */
+}
+
+.audio-controls::-webkit-scrollbar {
+	display: none; /* Chrome / Safari */
+}
+
+/* Icon Buttons */
+.icon-btn {
+	background: none;
+	border: none;
+	color: inherit;
+	cursor: pointer;
+	color: var(--modal-text-color);
+}
+
+.icon-btn:focus {
+	border-radius: 100px;
+	background-color: #77777759;
+	-webkit-tap-highlight-color: transparent;
+}
+
+.blur {
+	filter: blur(8px);
+}
+
+.hide {
+	display: none !important;
+}
+
+.disabled {
+	opacity: 60%;
 }

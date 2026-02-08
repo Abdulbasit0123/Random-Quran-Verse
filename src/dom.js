@@ -35,11 +35,29 @@ export const searchInput = document.getElementById('search-input');
 export const languageList = document.getElementById('language-list');
 export const saveLanguageBtn = document.getElementById('save-language');
 
+export const audioEl = document.getElementById('audio');
 export const reciterBtn = document.getElementById('reciter');
 export const reciterModal = document.getElementById('reciter-modal');
 export const reciterList = document.getElementById('reciter-list');
 export const saveReciterBtn = document.getElementById('save-reciter');
 
-export const audioEl = document.getElementById('audio');
+export const seekBackwardBtn = document.getElementById('seek-backward');
+export const seekForwardBtn = document.getElementById('seek-forward');
+export const blurBtn = document.getElementById('blur-ayahs');
+export const blurIcon = document.getElementById('blur-icon');
+export const unblurIcon = document.getElementById('unblur-icon');
+
+export const autoPlayMode = document.getElementById('auto-play-mode');
+export const orderIcon = document.getElementById('order-icon');
+export const shuffleIcon = document.getElementById('shuffle-icon');
+
+export const repeatBtn = document.getElementById('repeat');
+
+export const progressBar = document.getElementById('progress-bar');
+export const progress = document.getElementById('progress');
+export const currentTimeEl = document.getElementById('current-time');
+export const durationEl = document.getElementById('duration');
 export const playBtn = document.getElementById('play');
 export const pauseBtn = document.getElementById('pause');
+
+export const playbackSpeedBtn = document.getElementById('playback-speed');

@@ -1,4 +1,5 @@
 import { audioEl, playBtn, pauseBtn } from '../dom';
+import { currentPlaybackSpeed } from '../events/actions';
 import { currentAyahNumber } from './panel/panel';
 import { getReciterData } from './reciterModal';
 
@@ -17,6 +18,7 @@ export function playAudio() {
         audioEl.load(); // Load the new source
     }
 
+    audioEl.playbackRate = currentPlaybackSpeed;
     audioEl.play().catch(error => {
         if (error.name === 'AbortError') {
             console.log('Playback was interrupted by pause.');

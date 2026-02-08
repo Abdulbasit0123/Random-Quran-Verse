@@ -149,6 +149,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 -   Quran text and translations are sourced from [Al Quran Cloud](https://alquran.cloud/) API
 -   [Font Awesome](https://fontawesome.com/) icons for the UI
 -   Uthmanic Hafs font for beautiful Arabic text rendering
+-   [Techartist's Music Player UI](https://codepen.io/VoXelo/pen/PwwexWr) for the audio progress bar
 
 ### Contact
 
