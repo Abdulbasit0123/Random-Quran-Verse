@@ -86,7 +86,6 @@ export function setupActionBtns() {
         }
         if (playModeState === 1) {
             movePanelHorizontally(-1);
-            playAudio();
         }
         if (playModeState === 2) {
             movePanelVertically(1);
