@@ -11,6 +11,7 @@ export let isOnAutoplay = false;
 export let playModeState = 0;//0 is disabled, 1 is ordered, 2 is shuffled
 let isRepeatModeOn = false; //0 is disabled, 1 is twice, 2 is thrice, 3 is infinite
 export let currentPlaybackSpeed = 1;
+let animationFrameId = null;
 
 export function setupActionBtns() {
     //double click to show/hide overlay buttons
@@ -72,13 +73,62 @@ export function setupActionBtns() {
         pauseAudio();
         isOnAutoplay = false;
     });
+
+    /* Set duration when audio metadata loads */
+    audioEl.addEventListener('loadedmetadata', () => {
+        durationEl.textContent = formatTime(audioEl.duration);
+    });
+
+    /* Format mm:ss */
+    function formatTime(seconds) {
+        if (isNaN(seconds)) return '0:00';
+        const m = Math.floor(seconds / 60);
+        const s = Math.floor(seconds % 60);
+        return `${m}:${s < 10 ? '0' : ''}${s}`;
+    }
+
+    function updateProgress() {
+        if (!audioEl.duration) {
+            animationFrameId = requestAnimationFrame(updateProgress);
+            return;
+        }
+        const percent = audioEl.currentTime / audioEl.duration;
+        progress.style.width = `${percent * 100}%`;
+        currentTimeEl.textContent = formatTime(audioEl.currentTime);
+        animationFrameId = requestAnimationFrame(updateProgress);
+    }
+
+    // Start progress bar animation when audio plays
+    audioEl.addEventListener('play', () => {
+        if (!animationFrameId) {
+            animationFrameId = requestAnimationFrame(updateProgress);
+        }
+    });
+
+    // Stop progress bar animation when audio pauses or ends
+    audioEl.addEventListener('pause', () => {
+        cancelAnimationFrame(animationFrameId);
+        animationFrameId = null;
+    });
+
+    /* Update progress while playing */
+    audioEl.addEventListener('timeupdate', () => {
+        if (!audioEl.duration) return;
+
+        const percent = audioEl.currentTime / audioEl.duration;
+        progress.style.width = `${percent * 100}%`;
+        currentTimeEl.textContent = formatTime(audioEl.currentTime);
+    });
+
     audioEl.addEventListener('ended', () => {
         playBtn.classList.remove('hide');
         pauseBtn.classList.add('hide');
 
-        /* Snap to 100% on end */
+        // Snap progress bar to 100% on end and stop it
         progress.style.width = '100%';
         currentTimeEl.textContent = formatTime(audioEl.duration);
+        cancelAnimationFrame(animationFrameId);
+        animationFrameId = null;
 
         if (isRepeatModeOn) {
             playAudio();
@@ -91,28 +141,6 @@ export function setupActionBtns() {
             movePanelVertically(1);
             playAudio();
         }
-    });
-
-    /* Format mm:ss */
-    function formatTime(seconds) {
-        if (isNaN(seconds)) return '0:00';
-        const m = Math.floor(seconds / 60);
-        const s = Math.floor(seconds % 60);
-        return `${m}:${s < 10 ? '0' : ''}${s}`;
-    }
-
-    /* Set duration when metadata loads */
-    audioEl.addEventListener('loadedmetadata', () => {
-        durationEl.textContent = formatTime(audioEl.duration);
-    });
-
-    /* Update progress while playing */
-    audioEl.addEventListener('timeupdate', () => {
-        if (!audioEl.duration) return;
-
-        const percent = audioEl.currentTime / audioEl.duration;
-        progress.style.width = `${percent * 100}%`;
-        currentTimeEl.textContent = formatTime(audioEl.currentTime);
     });
 
     /* Click-to-seek */
